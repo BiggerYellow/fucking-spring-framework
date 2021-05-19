@@ -50,6 +50,7 @@ public interface MergedBeanDefinitionPostProcessor extends BeanPostProcessor {
 	 * A notification that the bean definition for the specified name has been reset,
 	 * and that this post-processor should clear any metadata for the affected bean.
 	 * <p>The default implementation is empty.
+	 *一个通知表明指定名称的bean定义已经被重置，且这个后置处理器应该为这个影响的bean清除任何元数据
 	 * @param beanName the name of the bean
 	 * @since 5.1
 	 * @see DefaultListableBeanFactory#resetBeanDefinition

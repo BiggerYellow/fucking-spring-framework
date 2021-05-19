@@ -19,10 +19,11 @@ package org.springframework.core.env;
 /**
  * {@link Environment} implementation suitable for use in 'standard' (i.e. non-web)
  * applications.
- *
+ * 实现适合在标准应用程序中使用
  * <p>In addition to the usual functions of a {@link ConfigurableEnvironment} such as
  * property resolution and profile-related operations, this implementation configures two
  * default property sources, to be searched in the following order:
+ * 除了ConfigurableEnvironemt的常用功能外，例如属性解析和配置文件相关的操作，此实现还配置了两个默认属性源，将按如下顺序搜索
  * <ul>
  * <li>{@linkplain AbstractEnvironment#getSystemProperties() system properties}
  * <li>{@linkplain AbstractEnvironment#getSystemEnvironment() system environment variables}
@@ -35,12 +36,15 @@ package org.springframework.core.env;
  * environment variables may be the same across many JVMs on a given system.  Giving
  * system properties precedence allows for overriding of environment variables on a
  * per-JVM basis.
+ * 也就是说，如果xyz同时存在于JVM系统属性以及当前进程的环境变量中，则系统环境中的xyz将会从environmrnt.getProperty('xyz')的调用中返回。
+ * 默认情况下选择此顺序。因为系统属性是针对每个JVM的，而环境属性在给定的系统上的JVM中可能是相同的。
+ * 通过赋予属性优先级可以覆盖环境变量基于JVM
  *
  * <p>These default property sources may be removed, reordered, or replaced; and
  * additional property sources may be added using the {@link MutablePropertySources}
  * instance available from {@link #getPropertySources()}. See
  * {@link ConfigurableEnvironment} Javadoc for usage examples.
- *
+ * 这些默认属性来源可能会被删除、重新排序或替换。并且可以通过getPropertySources()的MutablePropertySources实例添加其他属性来源
  * <p>See {@link SystemEnvironmentPropertySource} javadoc for details on special handling
  * of property names in shell environments (e.g. Bash) that disallow period characters in
  * variable names.

@@ -24,14 +24,14 @@ import org.springframework.util.ResourceUtils;
  * resources). An {@link org.springframework.context.ApplicationContext}
  * is required to provide this functionality, plus extended
  * {@link org.springframework.core.io.support.ResourcePatternResolver} support.
- *
+ * 加载属性的策略接口。应用上下文必须提供此功能以及扩展功能ResourcePatternResolver的支持
  * <p>{@link DefaultResourceLoader} is a standalone implementation that is
  * usable outside an ApplicationContext, also used by {@link ResourceEditor}.
- *
+ * DefaultResourceLoader是一个独立的实现，他在应用上下文之外也是有用的，并且也被ResourceEditor使用
  * <p>Bean properties of type Resource and Resource array can be populated
  * from Strings when running in an ApplicationContext, using the particular
  * context's resource loading strategy.
- *
+ * 可以填充类型为Resource和Resource[]的bean属性从字符串当在应用上下文中运行，使用特定的上下文资源加载策略
  * @author Juergen Hoeller
  * @since 10.03.2004
  * @see Resource

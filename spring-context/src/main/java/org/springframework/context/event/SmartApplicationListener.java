@@ -24,10 +24,10 @@ import org.springframework.lang.Nullable;
 /**
  * Extended variant of the standard {@link ApplicationListener} interface,
  * exposing further metadata such as the supported event and source type.
- *
+ * 标准应用监听者接口的扩展变种，暴露更多的元数据，类似支持的实际和资源类型
  * <p>For full introspection of generic event types, consider implementing
  * the {@link GenericApplicationListener} interface instead.
- *
+ * 要全面考虑一般事件类型，考虑实现GenericApplicationListenrt接口代替
  * @author Juergen Hoeller
  * @since 3.0
  * @see GenericApplicationListener

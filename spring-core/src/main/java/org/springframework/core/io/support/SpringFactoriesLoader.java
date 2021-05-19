@@ -41,14 +41,16 @@ import org.springframework.util.StringUtils;
 
 /**
  * General purpose factory loading mechanism for internal use within the framework.
- *
+ * 通用的工厂加载机制为框架内部使用
+
  * <p>{@code SpringFactoriesLoader} {@linkplain #loadFactories loads} and instantiates
  * factories of a given type from {@value #FACTORIES_RESOURCE_LOCATION} files which
  * may be present in multiple JAR files in the classpath. The {@code spring.factories}
  * file must be in {@link Properties} format, where the key is the fully qualified
  * name of the interface or abstract class, and the value is a comma-separated list of
  * implementation class names. For example:
- *
+ * SpringFactoriesLoader通过给定的类型加载和实例化工厂从META-INF/spring.factories文件中，这个文件可能存在多个jar文件中。
+ * spring.factories文件必须是Properties格式，key是完全限定的抽象接口名，value是这些类的实现类集合
  * <pre class="code">example.MyService=example.MyServiceImpl1,example.MyServiceImpl2</pre>
  *
  * where {@code example.MyService} is the name of the interface, and {@code MyServiceImpl1}
@@ -64,6 +66,8 @@ public final class SpringFactoriesLoader {
 	/**
 	 * The location to look for factories.
 	 * <p>Can be present in multiple JAR files.
+	 * 查找工厂的位置
+	 * 可以存在多个jar文件中
 	 */
 	public static final String FACTORIES_RESOURCE_LOCATION = "META-INF/spring.factories";
 
@@ -80,9 +84,11 @@ public final class SpringFactoriesLoader {
 	/**
 	 * Load and instantiate the factory implementations of the given type from
 	 * {@value #FACTORIES_RESOURCE_LOCATION}, using the given class loader.
+	 * 使用给定的类加载器，从META-INF/spring.factories中加载并实例化给定类型的工厂实现
 	 * <p>The returned factories are sorted through {@link AnnotationAwareOrderComparator}.
 	 * <p>If a custom instantiation strategy is required, use {@link #loadFactoryNames}
 	 * to obtain all registered factory names.
+	 * 返回的工厂通过AnnotationAwareOrderComparator排序。如果需要自定义实例化策略，使用loadFactoryNames取获取所有已经注册的工厂名字
 	 * @param factoryType the interface or abstract class representing the factory
 	 * @param classLoader the ClassLoader to use for loading (can be {@code null} to use the default)
 	 * @throws IllegalArgumentException if any factory implementation class cannot
@@ -111,6 +117,7 @@ public final class SpringFactoriesLoader {
 	 * Load the fully qualified class names of factory implementations of the
 	 * given type from {@value #FACTORIES_RESOURCE_LOCATION}, using the given
 	 * class loader.
+	 * 通过给定的类加载器从META-INF/spring.factories中加载给定类型的全限定名的实现类
 	 * @param factoryType the interface or abstract class representing the factory
 	 * @param classLoader the ClassLoader to use for loading resources; can be
 	 * {@code null} to use the default
@@ -123,12 +130,14 @@ public final class SpringFactoriesLoader {
 	}
 
 	private static Map<String, List<String>> loadSpringFactories(@Nullable ClassLoader classLoader) {
+		//先从缓存中加载 如果存在则直接返回 不存在则进行加载
 		MultiValueMap<String, String> result = cache.get(classLoader);
 		if (result != null) {
 			return result;
 		}
 
 		try {
+			//从classpath中找到所有的META-INF/spring.factories
 			Enumeration<URL> urls = (classLoader != null ?
 					classLoader.getResources(FACTORIES_RESOURCE_LOCATION) :
 					ClassLoader.getSystemResources(FACTORIES_RESOURCE_LOCATION));
@@ -136,7 +145,9 @@ public final class SpringFactoriesLoader {
 			while (urls.hasMoreElements()) {
 				URL url = urls.nextElement();
 				UrlResource resource = new UrlResource(url);
+				//将每个META-INF/spring.factories加载成配置
 				Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+				//将配置转换成map key为抽象类接口  value为实现类集合
 				for (Map.Entry<?, ?> entry : properties.entrySet()) {
 					String factoryTypeName = ((String) entry.getKey()).trim();
 					for (String factoryImplementationName : StringUtils.commaDelimitedListToStringArray((String) entry.getValue())) {
