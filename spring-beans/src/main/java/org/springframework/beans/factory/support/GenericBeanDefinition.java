@@ -25,12 +25,15 @@ import org.springframework.util.ObjectUtils;
  * Like any bean definition, it allows for specifying a class plus optionally
  * constructor argument values and property values. Additionally, deriving from a
  * parent bean definition can be flexibly configured through the "parentName" property.
+ * GenericBeanDefinition是用于标准bean定义目的的一站式商店。像任何bean定义一样，他允许指定一个可选的构造函数参数值和属性值。
+ * 此外，可以通过“parentName”属性灵活配置 从父bean定义中派生
  *
  * <p>In general, use this {@code GenericBeanDefinition} class for the purpose of
  * registering user-visible bean definitions (which a post-processor might operate on,
  * potentially even reconfiguring the parent name). Use {@code RootBeanDefinition} /
  * {@code ChildBeanDefinition} where parent/child relationships happen to be pre-determined.
- *
+ * 通常，使用此GenericBeanDefinition类来注册用户可看见的bean定义（后置处理器可能会对其进行操作，甚至可能重新配置父名称）。
+ * 在父子关系恰好需要预先决定的地方使用RootBeanDefinition和ChildBeanDefinition
  * @author Juergen Hoeller
  * @since 2.5
  * @see #setParentName

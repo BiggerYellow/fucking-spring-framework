@@ -24,18 +24,23 @@ import org.springframework.lang.Nullable;
 /**
  * Interface to provide configuration for a web application. This is read-only while
  * the application is running, but may be reloaded if the implementation supports this.
+ * 为web应用提供配置的接口。当应用运行时他是只读的，但是可以重新加载如果实现支持的话
  *
  * <p>This interface adds a {@code getServletContext()} method to the generic
  * ApplicationContext interface, and defines a well-known application attribute name
  * that the root context must be bound to in the bootstrap process.
+ * 这个接口增加了一个getServletContext()接口给通用的应用上下文接口，并定义了一个众所周知的应用属性名称，在引导过程中必须将根上下文绑定到该名称
  *
  * <p>Like generic application contexts, web application contexts are hierarchical.
  * There is a single root context per application, while each servlet in the application
  * (including a dispatcher servlet in the MVC framework) has its own child context.
+ * 像通用的应用上下文，web应用上下文是分层的。
+ * 每个应用只有一个根上下文，然而应用中的每个servlet拥有自己的子上下文
  *
  * <p>In addition to standard application context lifecycle capabilities,
  * WebApplicationContext implementations need to detect {@link ServletContextAware}
  * beans and invoke the {@code setServletContext} method accordingly.
+ *除了标准的应用上下文声明周期功能，web应用上下文实现需要检测ServletContextAware的eabn且相应的调用setServletContext方法
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

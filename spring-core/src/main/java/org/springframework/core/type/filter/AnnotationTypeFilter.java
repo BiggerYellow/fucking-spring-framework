@@ -28,6 +28,7 @@ import org.springframework.util.ClassUtils;
 /**
  * A simple {@link TypeFilter} which matches classes with a given annotation,
  * checking inherited annotations as well.
+ * 检通给定的注解匹配类的一个简单类型过滤器，同样检查内部的注解
  *
  * <p>By default, the matching logic mirrors that of
  * {@link AnnotationUtils#getAnnotation(java.lang.reflect.AnnotatedElement, Class)},
@@ -35,7 +36,9 @@ import org.springframework.util.ClassUtils;
  * single level of meta-annotations. The search for meta-annotations my be disabled.
  * Similarly, the search for annotations on interfaces may optionally be enabled.
  * Consult the various constructors in this class for details.
- *
+ * 默认匹配逻辑AnnotationUtils#getAnnotation(java.lang.reflect.AnnotatedElement, Class)一致，支持present或meta-present的注解用于单个级别的元注释。
+ * 可能禁止搜索元注解。同样的，可以选择开启搜索接口上的注解。
+ * 查阅这个类中各样的构造 为了更详细的细节
  * @author Mark Fisher
  * @author Ramnivas Laddad
  * @author Juergen Hoeller
@@ -51,10 +54,13 @@ public class AnnotationTypeFilter extends AbstractTypeHierarchyTraversingFilter 
 
 	/**
 	 * Create a new {@code AnnotationTypeFilter} for the given annotation type.
+	 * 使用给定的注解类型创建一个AnnotationTypeFilter
 	 * <p>The filter will also match meta-annotations. To disable the
 	 * meta-annotation matching, use the constructor that accepts a
 	 * '{@code considerMetaAnnotations}' argument.
 	 * <p>The filter will not match interfaces.
+	 * 这个过滤器将也匹配元注解。使用接受considerMetaAnnotations参数的构造来禁止元注解的匹配、
+	 * 这个过滤器将不会匹配接口
 	 * @param annotationType the annotation type to match
 	 */
 	public AnnotationTypeFilter(Class<? extends Annotation> annotationType) {

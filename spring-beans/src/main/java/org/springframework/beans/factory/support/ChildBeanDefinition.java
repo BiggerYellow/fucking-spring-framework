@@ -24,6 +24,7 @@ import org.springframework.util.ObjectUtils;
 /**
  * Bean definition for beans which inherit settings from their parent.
  * Child bean definitions have a fixed dependency on a parent bean definition.
+ * 从其父级继承设置的bean定义。子bean定义对父bean定义存在一个固定的依赖关系。
  *
  * <p>A child bean definition will inherit constructor argument values,
  * property values and method overrides from the parent, with the option
@@ -31,6 +32,9 @@ import org.springframework.util.ObjectUtils;
  * method are specified, they will override the corresponding parent settings.
  * The remaining settings will <i>always</i> be taken from the child definition:
  * depends on, autowire mode, dependency check, singleton, lazy init.
+ * 子bean定义将从父级继承构造参数值、属性值和方法重写，可以选择新增新的值。
+ * 如果是初始化方法、消耗方法 和/或静态工厂方法被指定，他们将重新相关的父级设置。
+ * 其他的设置总是从自定义中获取的：depends on, autowire mode, dependency check, singleton, lazy init.
  *
  * <p><b>NOTE:</b> Since Spring 2.5, the preferred way to register bean
  * definitions programmatically is the {@link GenericBeanDefinition} class,

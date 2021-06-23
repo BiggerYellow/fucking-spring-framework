@@ -35,10 +35,12 @@ import org.springframework.util.StringUtils;
  * Used by {@link ResourceEditor}, and serves as base class for
  * {@link org.springframework.context.support.AbstractApplicationContext}.
  * Can also be used standalone.
+ * ResourceLoader接口的默认实现类。被ResourceEditor使用，且作为基础类为AbstractApplicationContext服务。也可以单独使用
  *
  * <p>Will return a {@link UrlResource} if the location value is a URL,
  * and a {@link ClassPathResource} if it is a non-URL path or a
  * "classpath:" pseudo-URL.
+ * 如果位置值是URL将返回一个UrlResource，且如果他是一个没有url的路径或 classpath url将会返回ClassPathResource
  *
  * @author Juergen Hoeller
  * @since 10.03.2004
@@ -89,6 +91,8 @@ public class DefaultResourceLoader implements ResourceLoader {
 	 * Return the ClassLoader to load class path resources with.
 	 * <p>Will get passed to ClassPathResource's constructor for all
 	 * ClassPathResource objects created by this resource loader.
+	 * 返回类加载器以加载类路径资源。
+	 * 将为此资源加载器创建的所有ClassPathResource对象传递给ClassPathResource的构造函数
 	 * @see ClassPathResource
 	 */
 	@Override

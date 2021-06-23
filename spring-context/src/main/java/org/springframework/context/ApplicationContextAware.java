@@ -22,11 +22,14 @@ import org.springframework.beans.factory.Aware;
 /**
  * Interface to be implemented by any object that wishes to be notified
  * of the {@link ApplicationContext} that it runs in.
+ * 希望在其运行的ApplicationContext得到通知的任何对象实现的接口
  *
  * <p>Implementing this interface makes sense for example when an object
  * requires access to a set of collaborating beans. Note that configuration
  * via bean references is preferable to implementing this interface just
  * for bean lookup purposes.
+ * 例如 当对象需要访问一组协作bean的时候，实现这个接口很有意义。
+ * 请注意，仅出于bean查找目的，通过bean引用进行配置比实现此接口更可取
  *
  * <p>This interface can also be implemented if an object needs access to file
  * resources, i.e. wants to call {@code getResource}, wants to publish
@@ -34,15 +37,20 @@ import org.springframework.beans.factory.Aware;
  * it is preferable to implement the more specific {@link ResourceLoaderAware},
  * {@link ApplicationEventPublisherAware} or {@link MessageSourceAware} interface
  * in such a specific scenario.
+ * 当一个对象需要访问文件资源，希望调用getResource，希望发布一个应用事件或需要访问MessageSource，这个接口也需要被实现。
+ * 但是，在一个特殊的场景中，实现更特殊的ResourceLoaderAware、ApplicationEventPublisherAware或MessageSourceAware接口更好
  *
  * <p>Note that file resource dependencies can also be exposed as bean properties
  * of type {@link org.springframework.core.io.Resource}, populated via Strings
  * with automatic type conversion by the bean factory. This removes the need
  * for implementing any callback interface just for the purpose of accessing
  * a specific file resource.
+ * 请注意，文件资源依赖也可以公开为Resource类型的bean属性，由bean工厂通过自动类型转换的字符串填充。
+ * 这样就无无需为了访问特定文件资源而实现任何回调接口
  *
  * <p>{@link org.springframework.context.support.ApplicationObjectSupport} is a
  * convenience base class for application objects, implementing this interface.
+ * ApplicationObjectSupport是应用对象的一个快捷基础类，实现了这个接口
  *
  * <p>For a list of all bean lifecycle methods, see the
  * {@link org.springframework.beans.factory.BeanFactory BeanFactory javadocs}.

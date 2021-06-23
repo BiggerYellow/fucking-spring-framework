@@ -69,7 +69,11 @@ import org.springframework.util.ClassUtils;
  * filters on an annotation/superclass that are annotated with {@link Indexed} are
  * supported: if any other include filter is specified, the index is ignored and
  * classpath scanning is used instead.
- *
+ * 一个组件提供者  从基础包中提供候选组件。
+ * 如果可用，则可以使用CandidateComponentsIndex索引，否则扫描类路径。
+ * 通过应用排除和包含的过滤器来识别候选组件。
+ * AnnotationTypeFilter、AssignableTypeFilter 包括对使用Indexed注解的的注解/超类的过滤器。
+ * 如果指定了任何其他包含过滤器，索引将被忽略且类路径扫描将被使用
  * <p>This implementation is based on Spring's
  * {@link org.springframework.core.type.classreading.MetadataReader MetadataReader}
  * facility, backed by an ASM {@link org.springframework.asm.ClassReader ClassReader}.
@@ -305,20 +309,24 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 
 	/**
 	 * Scan the class path for candidate components.
+	 * 扫描类路径获取候选组件
 	 * @param basePackage the package to check for annotated classes
 	 * @return a corresponding Set of autodetected bean definitions
 	 */
 	public Set<BeanDefinition> findCandidateComponents(String basePackage) {
 		if (this.componentsIndex != null && indexSupportsIncludeFilters()) {
+			//根据索引扫描候选者组件
 			return addCandidateComponentsFromIndex(this.componentsIndex, basePackage);
 		}
 		else {
+			//根据类路径扫描候选者组件
 			return scanCandidateComponents(basePackage);
 		}
 	}
 
 	/**
 	 * Determine if the index can be used by this instance.
+	 * 判断是否可以使用索引 在这个实例中
 	 * @return {@code true} if the index is available and the configuration of this
 	 * instance is supported by it, {@code false} otherwise
 	 * @since 5.0
@@ -354,6 +362,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 
 	/**
 	 * Extract the stereotype to use for the specified compatible filter.
+	 * 提取原型以用于指定的兼容过滤器
 	 * @param filter the filter to handle
 	 * @return the stereotype in the index matching this filter
 	 * @since 5.0

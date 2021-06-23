@@ -31,7 +31,7 @@ import org.springframework.lang.Nullable;
  * Provides facilities to configure an application context in addition
  * to the application context client methods in the
  * {@link org.springframework.context.ApplicationContext} interface.
- * SPI接口将被大多数应用上下文实现。
+ * SPI接口将由大多数应用上下文实现。
  * 除了ApplicationContext接口中的应用程序上下文方法之外，还提供了配置应用程序上下文的功能
  * <p>Configuration and lifecycle methods are encapsulated here to avoid
  * making them obvious to ApplicationContext client code. The present
@@ -161,9 +161,12 @@ public interface ConfigurableApplicationContext extends ApplicationContext, Life
 	/**
 	 * Load or refresh the persistent representation of the configuration,
 	 * which might an XML file, properties file, or relational database schema.
+	 * 加载或刷新配置的持久表示形式，可能是XML文件、属性文件或关系数据库模式
 	 * <p>As this is a startup method, it should destroy already created singletons
 	 * if it fails, to avoid dangling resources. In other words, after invocation
 	 * of that method, either all or no singletons at all should be instantiated.
+	 * 作为一个启动方法，如果失败时它应该销毁已经创建的单例，来防止闲置资源。
+	 * 换句话说，在调用这个方法之后，要么全部实例化要么全部没有实例化
 	 * @throws BeansException if the bean factory could not be initialized
 	 * @throws IllegalStateException if already initialized and multiple refresh
 	 * attempts are not supported

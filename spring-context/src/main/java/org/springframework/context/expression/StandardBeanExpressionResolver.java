@@ -92,6 +92,7 @@ public class StandardBeanExpressionResolver implements BeanExpressionResolver {
 	/**
 	 * Create a new {@code StandardBeanExpressionResolver} with the given bean class loader,
 	 * using it as the basis for expression compilation.
+	 * 使用给定的bean类加载器创建一个新的StandardBeanExpressionResolver，使用它作为表达式编译器的基础
 	 * @param beanClassLoader the factory's bean class loader
 	 */
 	public StandardBeanExpressionResolver(@Nullable ClassLoader beanClassLoader) {

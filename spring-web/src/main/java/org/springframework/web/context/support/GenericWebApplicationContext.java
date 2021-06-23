@@ -38,25 +38,30 @@ import org.springframework.web.context.ServletContextAware;
 
 /**
  * Subclass of {@link GenericApplicationContext}, suitable for web environments.
+ * GenericApplicationContext的子类，适用于web环境
  *
  * <p>Implements {@link org.springframework.web.context.ConfigurableWebApplicationContext},
  * but is not intended for declarative setup in {@code web.xml}. Instead, it is designed
  * for programmatic setup, for example for building nested contexts or for use within
  * {@link org.springframework.web.WebApplicationInitializer WebApplicationInitializers}.
+ * 实现ConfigurableWebApplicationContext 但是不是为了声明式的设置web.xml。相反，他设计为程序性设置，
+ * 例如为了构建嵌套的上下文或为了使用在WebApplicationInitializers中
  *
  * <p><b>If you intend to implement a WebApplicationContext that reads bean definitions
  * from configuration files, consider deriving from AbstractRefreshableWebApplicationContext,
  * reading the bean definitions in an implementation of the {@code loadBeanDefinitions}
  * method.</b>
+ * 如果你为了实现WebApplicationContext 来从配置文件中读取bean定义，考虑从AbstractRefreshableWebApplicationContext中派生，
+ * 在loadBeanDefinitions方法的实现中读取bean定义
  *
  * <p>Interprets resource paths as servlet context resources, i.e. as paths beneath
  * the web application root. Absolute paths, e.g. for files outside the web app root,
  * can be accessed via "file:" URLs, as implemented by AbstractApplicationContext.
- *
+ * 将资源路径解释为servlet上下文资源，作为web应用程序根目录下的路径。绝对路径，对于web应用程序根目录之外的文件，可以通过 file: 访问
  * <p>In addition to the special beans detected by
  * {@link org.springframework.context.support.AbstractApplicationContext},
  * this class detects a ThemeSource bean in the context, with the name "themeSource".
- *
+ * 除了AbstractApplicationContext检测的特殊bean，这个类检测一个主题资源bean在上下文中，通过名为 themeSource
  * @author Juergen Hoeller
  * @author Chris Beams
  * @since 1.2

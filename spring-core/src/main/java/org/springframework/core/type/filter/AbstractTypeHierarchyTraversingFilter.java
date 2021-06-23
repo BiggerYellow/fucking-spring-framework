@@ -28,11 +28,14 @@ import org.springframework.lang.Nullable;
 
 /**
  * Type filter that is aware of traversing over hierarchy.
+ * 知道遍历层次结构的类型过滤器
  *
  * <p>This filter is useful when matching needs to be made based on potentially the
  * whole class/interface hierarchy. The algorithm employed uses a succeed-fast
  * strategy: if at any time a match is declared, no further processing is
  * carried out.
+ * 当需要基于潜在的整个类或接口层次结构进行匹配时，此过滤器很有用。
+ * 采用的算法使用一个快速成功的策略：如果在任何时候声明匹配，则不进行进一步的处理
  *
  * @author Ramnivas Laddad
  * @author Mark Fisher
@@ -59,6 +62,7 @@ public abstract class AbstractTypeHierarchyTraversingFilter implements TypeFilte
 
 		// This method optimizes avoiding unnecessary creation of ClassReaders
 		// as well as visiting over those readers.
+		//这个方法优化避免无意义的ClassReaders的创建，同样还有访问那些readers
 		if (matchSelf(metadataReader)) {
 			return true;
 		}
@@ -71,6 +75,7 @@ public abstract class AbstractTypeHierarchyTraversingFilter implements TypeFilte
 			String superClassName = metadata.getSuperClassName();
 			if (superClassName != null) {
 				// Optimization to avoid creating ClassReader for super class.
+				//优化避免为父类创建ClassReader
 				Boolean superClassMatch = matchSuperClass(superClassName);
 				if (superClassMatch != null) {
 					if (superClassMatch.booleanValue()) {
@@ -79,6 +84,7 @@ public abstract class AbstractTypeHierarchyTraversingFilter implements TypeFilte
 				}
 				else {
 					// Need to read super class to determine a match...
+					//需要读取超类来确定是否匹配
 					try {
 						if (match(metadata.getSuperClassName(), metadataReaderFactory)) {
 							return true;

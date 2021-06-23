@@ -135,6 +135,9 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	 * <p>There is no expression support active in a BeanFactory by default.
 	 * An ApplicationContext will typically set a standard expression strategy
 	 * here, supporting "#{...}" expressions in a Unified EL compatible style.
+	 * 为bean定义值中的表达式指定解决策略
+	 * 默认情况下，BeanFactory中不支持任何表达式支持。
+	 * 一个应用上下文通常会设置一个标准的表达式策略，支持 "#{...}"的表达式在统一的EL风格上
 	 * @since 3.0
 	 */
 	void setBeanExpressionResolver(@Nullable BeanExpressionResolver resolver);
@@ -162,10 +165,13 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 
 	/**
 	 * Add a PropertyEditorRegistrar to be applied to all bean creation processes.
+	 * 添加一个PropertyEditorRegistrar应用于所有bean的创建过程
 	 * <p>Such a registrar creates new PropertyEditor instances and registers them
 	 * on the given registry, fresh for each bean creation attempt. This avoids
 	 * the need for synchronization on custom editors; hence, it is generally
 	 * preferable to use this method instead of {@link #registerCustomEditor}.
+	 * 这样的注册会创建新的PropertyEditor实例且在给定的注册表上注册他们，每次创建他们都是新的。
+	 * 这避免在自定义编辑器上同步的需要。所以，这通常是最好使用这个方法替换registerCustomEditor
 	 * @param registrar the PropertyEditorRegistrar to register
 	 */
 	void addPropertyEditorRegistrar(PropertyEditorRegistrar registrar);

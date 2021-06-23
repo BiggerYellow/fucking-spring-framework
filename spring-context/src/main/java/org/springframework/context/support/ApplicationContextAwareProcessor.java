@@ -40,12 +40,16 @@ import org.springframework.util.StringValueResolver;
  * implement the {@link EnvironmentAware}, {@link EmbeddedValueResolverAware},
  * {@link ResourceLoaderAware}, {@link ApplicationEventPublisherAware},
  * {@link MessageSourceAware}, and/or {@link ApplicationContextAware} interfaces.
+ * BeanPostProcessor的实现类，为实现EnvironmentAware、EmbeddedValueResolverAware、ResourceLoaderAware、ApplicationEventPublisherAware、MessageSourceAware、
+ * ApplicationContextAware接口的bean提供ApplicationContext、Environment或StringValueResolver
  *
  * <p>Implemented interfaces are satisfied in the order in which they are
  * mentioned above.
+ * 按照上面提到的顺序满足已实现的接口
  *
  * <p>Application contexts will automatically register this with their
  * underlying bean factory. Applications do not use this directly.
+ * 应用上下文将自动在其基础的bean工厂注册他。应用不直接使用它
  *
  * @author Juergen Hoeller
  * @author Costin Leau
@@ -68,6 +72,7 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 
 	/**
 	 * Create a new ApplicationContextAwareProcessor for the given context.
+	 * 使用给定的上下文创建一个新的ApplicationContextAwareProcessor
 	 */
 	public ApplicationContextAwareProcessor(ConfigurableApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;

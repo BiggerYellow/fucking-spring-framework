@@ -26,12 +26,14 @@ import org.springframework.lang.Nullable;
  * Interface to be implemented by configurable web application contexts.
  * Supported by {@link ContextLoader} and
  * {@link org.springframework.web.servlet.FrameworkServlet}.
+ * 由可配置的web应用上下文实现的接口。由ContextLoader和FrameworkServlet支持
  *
  * <p>Note: The setters of this interface need to be called before an
  * invocation of the {@link #refresh} method inherited from
  * {@link org.springframework.context.ConfigurableApplicationContext}.
  * They do not cause an initialization of the context on their own.
- *
+ * 注意：接口设置方法需要在从ConfigurableApplicationContext内部调用refresh方法之前调用。
+ * 他们本身不会导致上下文的初始化
  * @author Juergen Hoeller
  * @since 05.12.2003
  * @see #refresh

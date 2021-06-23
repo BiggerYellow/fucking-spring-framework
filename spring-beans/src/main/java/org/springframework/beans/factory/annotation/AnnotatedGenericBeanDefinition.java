@@ -34,6 +34,8 @@ import org.springframework.util.Assert;
  * in Spring's component scanning support (where the default definition class is
  * {@link org.springframework.context.annotation.ScannedGenericBeanDefinition},
  * which also implements the AnnotatedBeanDefinition interface).
+ * 此GenericBeanDefinition的变种对期望在AnnotatedBeanDefinition上操作的测试代码是有用的，
+ * 举例来说:Spring扫描组件直冲中的策略实现（默认定义类是ScannedGenericBeanDefinition，也实现了AnnotatedBeanDefinition接口）
  *
  * @author Juergen Hoeller
  * @author Chris Beams

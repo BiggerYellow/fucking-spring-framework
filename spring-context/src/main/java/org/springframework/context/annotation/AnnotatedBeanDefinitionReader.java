@@ -35,10 +35,10 @@ import org.springframework.util.Assert;
 
 /**
  * Convenient adapter for programmatic registration of bean classes.
- *
+ * 方便的适配器，用于以编程方式注册Bean类
  * <p>This is an alternative to {@link ClassPathBeanDefinitionScanner}, applying
  * the same resolution of annotations but for explicitly registered classes only.
- *
+ * 这是ClassPathBeanDefinitionScanner方法的替代方法，应用于相同的注解解析，但仅适用于显示注册类
  * @author Juergen Hoeller
  * @author Chris Beams
  * @author Sam Brannen
@@ -48,12 +48,16 @@ import org.springframework.util.Assert;
  */
 public class AnnotatedBeanDefinitionReader {
 
+	//用于操作Bean定义操作表
 	private final BeanDefinitionRegistry registry;
 
+	//bean名称生成器的实例   使用@Componect或以此为元注解的类  通常是首字母小写的类名
 	private BeanNameGenerator beanNameGenerator = AnnotationBeanNameGenerator.INSTANCE;
 
+	//作用域范围解析器
 	private ScopeMetadataResolver scopeMetadataResolver = new AnnotationScopeMetadataResolver();
 
+	//用于解析内部的Conditional注解
 	private ConditionEvaluator conditionEvaluator;
 
 
@@ -62,6 +66,8 @@ public class AnnotatedBeanDefinitionReader {
 	 * <p>If the registry is {@link EnvironmentCapable}, e.g. is an {@code ApplicationContext},
 	 * the {@link Environment} will be inherited, otherwise a new
 	 * {@link StandardEnvironment} will be created and used.
+	 * 使用给定的注册表创建一个新的AnnotatedBeanDefinitionReader。
+	 * 如果这个注册表是可包含环境的，例如，ApplicationContext，这个Environment将继承，不然一个新的StandardEnvironment将被创建和使用
 	 * @param registry the {@code BeanFactory} to load bean definitions into,
 	 * in the form of a {@code BeanDefinitionRegistry}
 	 * @see #AnnotatedBeanDefinitionReader(BeanDefinitionRegistry, Environment)
@@ -74,6 +80,7 @@ public class AnnotatedBeanDefinitionReader {
 	/**
 	 * Create a new {@code AnnotatedBeanDefinitionReader} for the given registry,
 	 * using the given {@link Environment}.
+	 * 使用给定的Environment和注册表创建一个新的AnnotatedBeanDefinitionReader
 	 * @param registry the {@code BeanFactory} to load bean definitions into,
 	 * in the form of a {@code BeanDefinitionRegistry}
 	 * @param environment the {@code Environment} to use when evaluating bean definition
@@ -91,6 +98,7 @@ public class AnnotatedBeanDefinitionReader {
 
 	/**
 	 * Get the BeanDefinitionRegistry that this reader operates on.
+	 * 获取此reader操作的BeanDefinitionRegistry
 	 */
 	public final BeanDefinitionRegistry getRegistry() {
 		return this.registry;
@@ -99,6 +107,7 @@ public class AnnotatedBeanDefinitionReader {
 	/**
 	 * Set the {@code Environment} to use when evaluating whether
 	 * {@link Conditional @Conditional}-annotated component classes should be registered.
+	 * 当解析Conditional注解的类是够应该被注册时 设置Environment来使用
 	 * <p>The default is a {@link StandardEnvironment}.
 	 * @see #registerBean(Class, String, Class...)
 	 */
@@ -108,6 +117,7 @@ public class AnnotatedBeanDefinitionReader {
 
 	/**
 	 * Set the {@code BeanNameGenerator} to use for detected bean classes.
+	 * 设置BeanNameGenerator用来检测bean类
 	 * <p>The default is a {@link AnnotationBeanNameGenerator}.
 	 */
 	public void setBeanNameGenerator(@Nullable BeanNameGenerator beanNameGenerator) {
@@ -117,6 +127,7 @@ public class AnnotatedBeanDefinitionReader {
 
 	/**
 	 * Set the {@code ScopeMetadataResolver} to use for registered component classes.
+	 * 设置 ScopeMetadataResolver 用来注册组件类
 	 * <p>The default is an {@link AnnotationScopeMetadataResolver}.
 	 */
 	public void setScopeMetadataResolver(@Nullable ScopeMetadataResolver scopeMetadataResolver) {
@@ -143,7 +154,7 @@ public class AnnotatedBeanDefinitionReader {
 	/**
 	 * Register a bean from the given bean class, deriving its metadata from
 	 * class-declared annotations.
-	 * 通过给定的bean类创建bean，并从此类声明的批注中派生其元数据
+	 * 通过给定的bean类创建bean，并从此类声明的注解中派生其元数据
 	 * @param beanClass the class of the bean
 	 */
 	public void registerBean(Class<?> beanClass) {
@@ -239,6 +250,7 @@ public class AnnotatedBeanDefinitionReader {
 	/**
 	 * Register a bean from the given bean class, deriving its metadata from
 	 * class-declared annotations.
+	 * 从给定的bean类中注册一个bean，从类声明的注解中派生他的元数据
 	 * @param beanClass the class of the bean
 	 * @param name an explicit name for the bean
 	 * @param supplier a callback for creating an instance of the bean

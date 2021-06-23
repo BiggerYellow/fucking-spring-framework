@@ -24,12 +24,16 @@ import org.springframework.core.io.ResourceLoader;
  * {@link ResourceLoader} (typically the ApplicationContext) that it runs in.
  * This is an alternative to a full {@link ApplicationContext} dependency via
  * the {@link org.springframework.context.ApplicationContextAware} interface.
+ * 希望通过运行其中的ResourceLoader（通常是ApplicationContext）得到通知的任何对象所实现的接口。
+ * 通过ApplicationContextAware接口这是一个可替换的完整的ApplicationContext依赖
  *
  * <p>Note that {@link org.springframework.core.io.Resource} dependencies can also
  * be exposed as bean properties of type {@code Resource}, populated via Strings
  * with automatic type conversion by the bean factory. This removes the need for
  * implementing any callback interface just for the purpose of accessing a
  * specific file resource.
+ * 表明Resource依赖可以公开为Resource类型的bean属性，bean工厂通过字符串填充进行自动类型转换。
+ * 这就无需为访问特定资源而实现任何回调接口
  *
  * <p>You typically need a {@link ResourceLoader} when your application object has to
  * access a variety of file resources whose names are calculated. A good strategy is
@@ -38,6 +42,8 @@ import org.springframework.core.io.ResourceLoader;
  * running in an {@code ApplicationContext}. See
  * {@link org.springframework.context.support.ReloadableResourceBundleMessageSource}
  * for an example.
+ * 你通常需要一个ResourceLoader当你的应用对象不得不访问一系列名字被计算过的文件资源。
+ * 一个好的策略是让对象使用DefaultResourceLoader但仍然实现ResourceLoaderAware来允许在ApplicationContext中运行时进行覆盖
  *
  * <p>A passed-in {@code ResourceLoader} can also be checked for the
  * {@link org.springframework.core.io.support.ResourcePatternResolver} interface
@@ -46,10 +52,13 @@ import org.springframework.core.io.ResourceLoader;
  * (since the context interface extends the ResourcePatternResolver interface). Use a
  * {@link org.springframework.core.io.support.PathMatchingResourcePatternResolver} as
  * default; see also the {@code ResourcePatternUtils.getResourcePatternResolver} method.
+ *	也可以检查传入的ResourceLoader的ResourcePatternResolver接口并进行相应的投射，为了将资源模式解析为Resource对象数组。
+ * 它将一直工作当在应用上下文中运行时。默认使用PathMatchingResourcePatternResolver。
  *
  * <p>As an alternative to a {@code ResourcePatternResolver} dependency, consider
  * exposing bean properties of type {@code Resource} array, populated via pattern
  * Strings with automatic type conversion by the bean factory at binding time.
+ * 作为ResourcePatternResolver依赖的替代方法，考虑公开Resource数组的bean属性，该属性通过模式字符串填充在绑定时期由bean工厂进行自动类型转换
  *
  * @author Juergen Hoeller
  * @author Chris Beams

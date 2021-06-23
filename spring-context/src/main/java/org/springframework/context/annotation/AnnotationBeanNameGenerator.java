@@ -41,15 +41,18 @@ import org.springframework.util.StringUtils;
  * {@link org.springframework.stereotype.Repository @Repository}) are
  * themselves annotated with
  * {@link org.springframework.stereotype.Component @Component}.
+ * BeanNameGenerator的实现类为处理使用@Component注解 或 使用@Component作为元注解的注解 的类
+ * 比如，Spring的构造型注解像 @Repository使用@Compoent注解
  *
  * <p>Also supports Java EE 6's {@link javax.annotation.ManagedBean} and
  * JSR-330's {@link javax.inject.Named} annotations, if available. Note that
  * Spring component annotations always override such standard annotations.
- *
+ *	也支持 Java EE 6的ManageBean和 JSR-330的Named注解。
+ * 请注意	spring组件注解总是覆盖这样的标准注解
  * <p>If the annotation's value doesn't indicate a bean name, an appropriate
  * name will be built based on the short name of the class (with the first
  * letter lower-cased). For example:
- *
+ * 如果注解的值不能表明一个bean的名字，一个合适的名字将被创建 基于class名字
  * <pre class="code">com.xyz.FooServiceImpl -&gt; fooServiceImpl</pre>
  *
  * @author Juergen Hoeller
@@ -66,10 +69,12 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 	/**
 	 * A convenient constant for a default {@code AnnotationBeanNameGenerator} instance,
 	 * as used for component scanning purposes.
+	 * 默认AnnotationBeanNameGenerator实例的方便的常量，用于组件扫描
 	 * @since 5.2
 	 */
 	public static final AnnotationBeanNameGenerator INSTANCE = new AnnotationBeanNameGenerator();
 
+	//Component的类路径
 	private static final String COMPONENT_ANNOTATION_CLASSNAME = "org.springframework.stereotype.Component";
 
 
@@ -79,6 +84,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 			String beanName = determineBeanNameFromAnnotation((AnnotatedBeanDefinition) definition);
 			if (StringUtils.hasText(beanName)) {
 				// Explicit bean name found.
+				//找到显示的bean名称
 				return beanName;
 			}
 		}
@@ -88,6 +94,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 
 	/**
 	 * Derive a bean name from one of the annotations on the class.
+	 * 从类的注解中获得bean的名字
 	 * @param annotatedDef the annotation-aware bean definition
 	 * @return the bean name, or {@code null} if none is found
 	 */
@@ -118,6 +125,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 	/**
 	 * Check whether the given annotation is a stereotype that is allowed
 	 * to suggest a component name through its annotation {@code value()}.
+	 * 检查给定的注解是否是允许通过其注解的值建议组件名称的构造型
 	 * @param annotationType the name of the annotation class to check
 	 * @param metaAnnotationTypes the names of meta-annotations on the given annotation
 	 * @param attributes the map of attributes for the given annotation
@@ -137,6 +145,8 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 	/**
 	 * Derive a default bean name from the given bean definition.
 	 * <p>The default implementation delegates to {@link #buildDefaultBeanName(BeanDefinition)}.
+	 * 从给定的bean定义中派生一个默认的bean名称。
+	 * 默认的实现类委托给 buildDefaultBeanName(BeanDefinition)
 	 * @param definition the bean definition to build a bean name for
 	 * @param registry the registry that the given bean definition is being registered with
 	 * @return the default bean name (never {@code null})
@@ -152,6 +162,9 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 	 * <p>Note that inner classes will thus have names of the form
 	 * "outerClassName.InnerClassName", which because of the period in the
 	 * name may be an issue if you are autowiring by name.
+	 * 从给定的bean定义中派生一个默认的bean名称。
+	 * 默认实现只是构建短类名称的去大写版本：例如 "mypackage.MyJdbcDao" -> "myJdbcDao".
+	 * 注意内部类的名词将因此变为 "outerClassName.InnerClassName"形式，如果你要通过名称注入，则由于名称中的句点可能出现问题
 	 * @param definition the bean definition to build a bean name for
 	 * @return the default bean name (never {@code null})
 	 */

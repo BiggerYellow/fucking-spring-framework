@@ -45,6 +45,8 @@ import org.springframework.util.Assert;
  * instance and does not assume a specific bean definition format. Implements
  * the {@link org.springframework.beans.factory.support.BeanDefinitionRegistry}
  * interface in order to allow for applying any bean definition readers to it.
+ * 通用的应用上下文实现类，持有一个简单的内部DefaultListableBeanFactory实例且不假定特定的bean定义格式。
+ * 实现BeanDefinitionRegistry接口为了允许对其应用任何的bean定义读取器
  *
  * <p>Typical usage is to register a variety of bean definitions via the
  * {@link org.springframework.beans.factory.support.BeanDefinitionRegistry}
@@ -53,11 +55,13 @@ import org.springframework.util.Assert;
  * {@link org.springframework.context.ApplicationContextAware}, auto-detecting
  * {@link org.springframework.beans.factory.config.BeanFactoryPostProcessor BeanFactoryPostProcessors},
  * etc).
+ * 典型的用法是通过BeanDefinitionRegistry接口注册多种bean定义 且然后调用Refresh取初始化这些bean通过上下文语义
  *
  * <p>In contrast to other ApplicationContext implementations that create a new
  * internal BeanFactory instance for each refresh, the internal BeanFactory of
  * this context is available right from the start, to be able to register bean
  * definitions on it. {@link #refresh()} may only be called once.
+ * 与其他上下文实现形成对比，创建一个新的内部的Bean工厂实例为每一次刷新，此上下文的内部Bean工厂从一开始就可用，可以注册bean定义。refresh可能只能调用一次
  *
  * <p>Usage example:
  *
@@ -78,10 +82,13 @@ import org.springframework.util.Assert;
  * resource locations for XML bean definitions, rather than mixing arbitrary bean
  * definition formats. The equivalent in a web environment is
  * {@link org.springframework.web.context.support.XmlWebApplicationContext}.
+ * 典型的xmlbean定义，使用ClassPathXmlApplicationContext或FileSystemXmlApplicationContext，都易于设置。
+ * 由于你可以只使用标准的资源位置为XML bean定义，而不是混合任意bean定义格式。在web环境中等效于XmlWebApplicationContext
  *
  * <p>For custom application context implementations that are supposed to read
  * special bean definition formats in a refreshable manner, consider deriving
  * from the {@link AbstractRefreshableApplicationContext} base class.
+ * 自定义应用上下文实现 期望读取特定的bean定义格式在一个刷新的方式，考虑从AbstractRefreshableApplicationContext基类派生
  *
  * @author Juergen Hoeller
  * @author Chris Beams
@@ -258,6 +265,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 	/**
 	 * Do nothing: We hold a single internal BeanFactory and rely on callers
 	 * to register beans through our public methods (or the BeanFactory's).
+	 * 不做任何事：我们持有一个简单的内部bean工厂 且 依赖调用者通过我们公共的方法来注册bean
 	 * @see #registerBeanDefinition
 	 */
 	@Override
@@ -286,6 +294,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 
 	/**
 	 * Return the single internal BeanFactory held by this context
+	 * 返回这个上下文持有的简单的内部bean工厂
 	 * (as ConfigurableListableBeanFactory).
 	 */
 	@Override

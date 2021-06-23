@@ -27,9 +27,10 @@ import org.springframework.util.StringUtils;
 /**
  * Support class for {@link AttributeAccessor AttributeAccessors}, providing
  * a base implementation of all methods. To be extended by subclasses.
+ *AttributeAccessors的支持类，提供一个所有方法的基础实现。通过子类继承。
  *
  * <p>{@link Serializable} if subclasses and all attribute values are {@link Serializable}.
- *
+ * 如果子类和所有属性值都是可序列化的，那他也是可序列化的
  * @author Rob Harrop
  * @author Juergen Hoeller
  * @since 2.0

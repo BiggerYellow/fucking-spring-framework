@@ -27,27 +27,39 @@ import org.springframework.lang.Nullable;
  * Central interface to provide configuration for an application.
  * This is read-only while the application is running, but may be
  * reloaded if the implementation supports this.
+ * 为应用程序提供配置的中央接口。当应用运行中时它是只读的，但是如果实现类支持它可能被重新加载
  *
  * <p>An ApplicationContext provides:
  * <ul>
  * <li>Bean factory methods for accessing application components.
+ * 用于访问应用组件的Bean工厂方法
  * Inherited from {@link org.springframework.beans.factory.ListableBeanFactory}.
+ * 继承自ListableBeanFactory
  * <li>The ability to load file resources in a generic fashion.
+ * 以通用方式加载文件资源的能力
  * Inherited from the {@link org.springframework.core.io.ResourceLoader} interface.
+ * 继承自ResourcesLoader接口
  * <li>The ability to publish events to registered listeners.
+ * 通过发布事件来注册监听者的能力
  * Inherited from the {@link ApplicationEventPublisher} interface.
+ * 继承自ApplicationEventPublisher接口
  * <li>The ability to resolve messages, supporting internationalization.
+ * 解析消息的能力，支持国际化
  * Inherited from the {@link MessageSource} interface.
+ * 继承自MessageSource接口
  * <li>Inheritance from a parent context. Definitions in a descendant context
  * will always take priority. This means, for example, that a single parent
  * context can be used by an entire web application, while each servlet has
  * its own child context that is independent of that of any other servlet.
+ * 从父上下文继承。在后代上下文的定义将始终优先。这意味着，举个例子，单个父上下文可以被整个web应用使用，
+ * 而每个servlet都有自己的子上下文，该子上下文独立于任何其他的servlet
  * </ul>
  *
  * <p>In addition to standard {@link org.springframework.beans.factory.BeanFactory}
  * lifecycle capabilities, ApplicationContext implementations detect and invoke
  * {@link ApplicationContextAware} beans as well as {@link ResourceLoaderAware},
  * {@link ApplicationEventPublisherAware} and {@link MessageSourceAware} beans.
+ * 除了标准的Bean工厂生命周期能力，应用上下文实现检测并调用ApplicationContextAware的beans 和 ResourceLoaderAware，ApplicationEventPublisherAware和MessageSourceAware的beans
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

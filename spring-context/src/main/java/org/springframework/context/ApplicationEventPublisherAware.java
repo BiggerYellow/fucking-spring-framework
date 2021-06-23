@@ -22,6 +22,7 @@ import org.springframework.beans.factory.Aware;
  * Interface to be implemented by any object that wishes to be notified
  * of the ApplicationEventPublisher (typically the ApplicationContext)
  * that it runs in.
+ * 由希望在其运行的ApplicationEventPublisher（通常是ApplicationContext）得到通知的任何对象实现的接口
  *
  * @author Juergen Hoeller
  * @author Chris Beams

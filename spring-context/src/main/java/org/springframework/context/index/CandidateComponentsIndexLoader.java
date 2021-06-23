@@ -35,7 +35,7 @@ import org.springframework.util.ConcurrentReferenceHashMap;
 
 /**
  * Candidate components index loading mechanism for internal use within the framework.
- *
+ * 用于框架内部使用的候选组件索引加载机制
  * @author Stephane Nicoll
  * @since 5.0
  */
@@ -43,6 +43,7 @@ public final class CandidateComponentsIndexLoader {
 
 	/**
 	 * The location to look for components.
+	 * 寻找组件的 位置
 	 * <p>Can be present in multiple JAR files.
 	 */
 	public static final String COMPONENTS_RESOURCE_LOCATION = "META-INF/spring.components";
@@ -55,6 +56,9 @@ public final class CandidateComponentsIndexLoader {
 	 * available for some libraries (or use cases) but couldn't be built for the whole
 	 * application. In this case, the application context fallbacks to a regular
 	 * classpath arrangement (i.e. as no index was present at all).
+	 * 系统属性 指导Spring 忽略这个索引，例如，总是从#loadIndex(ClassLoader)中返回null。
+	 * 默认为false，允许经常使用索引。选择标致为true 满足一个极端场景，当一个索引对某些库仅部分可用 但无法为整个程序构建。
+	 * 在这情况下，上下文回退到常规类路径安排
 	 */
 	public static final String IGNORE_INDEX = "spring.index.ignore";
 
@@ -75,6 +79,8 @@ public final class CandidateComponentsIndexLoader {
 	 * Load and instantiate the {@link CandidateComponentsIndex} from
 	 * {@value #COMPONENTS_RESOURCE_LOCATION}, using the given class loader. If no
 	 * index is available, return {@code null}.
+	 * 使用给定的类加载器，从组建资源位置中加载和实例化 CandidateComponentsIndex。
+	 * 如果没有合适的index，直接返回null
 	 * @param classLoader the ClassLoader to use for loading (can be {@code null} to use the default)
 	 * @return the index to use or {@code null} if no index was found
 	 * @throws IllegalArgumentException if any module index cannot

@@ -27,9 +27,10 @@ import org.springframework.util.Assert;
 
 /**
  * Utility class for creating a scoped proxy.
+ * 创建范围代理的工具类
  *
  * <p>Used by ScopedProxyBeanDefinitionDecorator and ClassPathBeanDefinitionScanner.
- *
+ * 被ScopedProxyBeanDefinitionDecorator和ClassPathBeanDefinitionScanner使用
  * @author Mark Fisher
  * @author Juergen Hoeller
  * @author Rob Harrop
@@ -46,6 +47,7 @@ public abstract class ScopedProxyUtils {
 	/**
 	 * Generate a scoped proxy for the supplied target bean, registering the target
 	 * bean with an internal name and setting 'targetBeanName' on the scoped proxy.
+	 * 为提供的目标bean生成一个范围代理，通过一个内部的名称注册目标bean且在代理中设置 目标bean名称
 	 * @param definition the original bean definition
 	 * @param registry the bean definition registry
 	 * @param proxyTargetClass whether to create a target class proxy
@@ -62,6 +64,7 @@ public abstract class ScopedProxyUtils {
 
 		// Create a scoped proxy definition for the original bean name,
 		// "hiding" the target bean in an internal target definition.
+		//为原始baen名称创建一个代理定义，将目标bean隐藏在一个内部的目标定义中
 		RootBeanDefinition proxyDefinition = new RootBeanDefinition(ScopedProxyFactoryBean.class);
 		proxyDefinition.setDecoratedDefinition(new BeanDefinitionHolder(targetDefinition, targetBeanName));
 		proxyDefinition.setOriginatingBeanDefinition(targetDefinition);
@@ -78,6 +81,7 @@ public abstract class ScopedProxyUtils {
 		}
 
 		// Copy autowire settings from original bean definition.
+		//从原始bean定义中拷贝注入设置
 		proxyDefinition.setAutowireCandidate(targetDefinition.isAutowireCandidate());
 		proxyDefinition.setPrimary(targetDefinition.isPrimary());
 		if (targetDefinition instanceof AbstractBeanDefinition) {
@@ -85,14 +89,17 @@ public abstract class ScopedProxyUtils {
 		}
 
 		// The target bean should be ignored in favor of the scoped proxy.
+		//目标bean应该被忽略 有利于代理
 		targetDefinition.setAutowireCandidate(false);
 		targetDefinition.setPrimary(false);
 
 		// Register the target bean as separate bean in the factory.
+		//注册目标bean作为一个隔离的bean在工厂中
 		registry.registerBeanDefinition(targetBeanName, targetDefinition);
 
 		// Return the scoped proxy definition as primary bean definition
 		// (potentially an inner bean).
+		//将作用域代理定义作为主bean定义返回
 		return new BeanDefinitionHolder(proxyDefinition, originalBeanName, definition.getAliases());
 	}
 

@@ -18,11 +18,14 @@ package org.springframework.core.env;
 
 /**
  * Interface indicating a component that contains and exposes an {@link Environment} reference.
+ * 表明一个包含和暴露环境引用的组件的接口
  *
  * <p>All Spring application contexts are EnvironmentCapable, and the interface is used primarily
  * for performing {@code instanceof} checks in framework methods that accept BeanFactory
  * instances that may or may not actually be ApplicationContext instances in order to interact
  * with the environment if indeed it is available.
+ *	所有的应用上下文都具有EnvironmentCapable功能，该接口主要用于在接受BeanFactory实例的框架方法中执行instanceof检查，以便与环境交互（如果确实可用）
+ *该beanFactory实例可能实际上也可能不是应用上下文实例
  *
  * <p>As mentioned, {@link org.springframework.context.ApplicationContext ApplicationContext}
  * extends EnvironmentCapable, and thus exposes a {@link #getEnvironment()} method; however,
@@ -31,6 +34,9 @@ package org.springframework.core.env;
  * getEnvironment()} and narrows the signature to return a {@link ConfigurableEnvironment}.
  * The effect is that an Environment object is 'read-only' until it is being accessed from
  * a ConfigurableApplicationContext, at which point it too may be configured.
+ * 如上所述，ApplicationContext继承EnvironmentCapable，因此暴露getEnvitonment方法。
+ * 但是，ConfigurableApplicationContext重新定义getEnvironment方法且缩小签名以返回一个ConfigurableEnvironment。
+ * 结果是断绝对象是只读的，直到从ConfigurableApplicationContext访问他为止，此时他也是可以被配置的
  *
  * @author Chris Beams
  * @since 3.1
