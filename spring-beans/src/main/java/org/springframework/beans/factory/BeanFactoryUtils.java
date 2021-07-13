@@ -62,6 +62,7 @@ public abstract class BeanFactoryUtils {
 
 	/**
 	 * Return whether the given name is a factory dereference
+	 * 返回给定的名称是否是一个工厂引用
 	 * (beginning with the factory dereference prefix).
 	 * @param name the name of the bean
 	 * @return whether the given name is a factory dereference
@@ -74,15 +75,18 @@ public abstract class BeanFactoryUtils {
 	/**
 	 * Return the actual bean name, stripping out the factory dereference
 	 * prefix (if any, also stripping repeated factory prefixes if found).
+	 * 返回实际的bean名称，去除工厂引用的前缀  (如果存在的话,也去除重复的工厂前缀 )
 	 * @param name the name of the bean
 	 * @return the transformed name
 	 * @see BeanFactory#FACTORY_BEAN_PREFIX
 	 */
 	public static String transformedBeanName(String name) {
 		Assert.notNull(name, "'name' must not be null");
+		//判断当前bean名称是否以 工厂标志 & 开头, 不是则直接返回
 		if (!name.startsWith(BeanFactory.FACTORY_BEAN_PREFIX)) {
 			return name;
 		}
+		//否则通过递归去除bean前面的 & 标识
 		return transformedBeanNameCache.computeIfAbsent(name, beanName -> {
 			do {
 				beanName = beanName.substring(BeanFactory.FACTORY_BEAN_PREFIX.length());

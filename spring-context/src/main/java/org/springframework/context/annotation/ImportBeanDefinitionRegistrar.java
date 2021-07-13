@@ -25,14 +25,18 @@ import org.springframework.core.type.AnnotationMetadata;
  * Interface to be implemented by types that register additional bean definitions when
  * processing @{@link Configuration} classes. Useful when operating at the bean definition
  * level (as opposed to {@code @Bean} method/instance level) is desired or necessary.
+ * 在处理@Configuration类的时候注册附加bean定义的类型实现的接口.
+ * 在渴望或需要子啊bean定义级别操作时很有用
  *
  * <p>Along with {@code @Configuration} and {@link ImportSelector}, classes of this type
  * may be provided to the @{@link Import} annotation (or may also be returned from an
  * {@code ImportSelector}).
+ * 与@Configuration和ImportSelector一起,这种类型的类可以提供给@Import注解
  *
  * <p>An {@link ImportBeanDefinitionRegistrar} may implement any of the following
  * {@link org.springframework.beans.factory.Aware Aware} interfaces, and their respective
  * methods will be called prior to {@link #registerBeanDefinitions}:
+ * 一个ImportBeanDefinitionRegistrar 可能实现以下任何一个Aware接口,且他们各自的方法将在refisterBeanDefinitions前被调用
  * <ul>
  * <li>{@link org.springframework.context.EnvironmentAware EnvironmentAware}</li>
  * <li>{@link org.springframework.beans.factory.BeanFactoryAware BeanFactoryAware}
@@ -42,6 +46,7 @@ import org.springframework.core.type.AnnotationMetadata;
  *
  * <p>Alternatively, the class may provide a single constructor with one or more of
  * the following supported parameter types:
+ * 或者, 这个类可能提供一个带有一个或多个以下支持的参数类型的构造
  * <ul>
  * <li>{@link org.springframework.core.env.Environment Environment}</li>
  * <li>{@link org.springframework.beans.factory.BeanFactory BeanFactory}</li>
@@ -63,9 +68,11 @@ public interface ImportBeanDefinitionRegistrar {
 	/**
 	 * Register bean definitions as necessary based on the given annotation metadata of
 	 * the importing {@code @Configuration} class.
+	 * 基于给定导入的@Configuration类的注解元数据注册需要的bean定义
 	 * <p>Note that {@link BeanDefinitionRegistryPostProcessor} types may <em>not</em> be
 	 * registered here, due to lifecycle constraints related to {@code @Configuration}
 	 * class processing.
+	 * 请注意,由于与@Configuration类出现相关的生命周期限制,BeanDefinitionRegisterPostProcess可能不会在此注册
 	 * <p>The default implementation delegates to
 	 * {@link #registerBeanDefinitions(AnnotationMetadata, BeanDefinitionRegistry)}.
 	 * @param importingClassMetadata annotation metadata of the importing class

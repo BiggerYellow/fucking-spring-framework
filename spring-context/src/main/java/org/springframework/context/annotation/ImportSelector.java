@@ -22,10 +22,12 @@ import org.springframework.core.type.AnnotationMetadata;
  * Interface to be implemented by types that determine which @{@link Configuration}
  * class(es) should be imported based on a given selection criteria, usually one or
  * more annotation attributes.
+ * 根据给定的选择标准(通常是一个或多个注解属性),确定导入哪个@Configuration类的类型要实现的接口
  *
  * <p>An {@link ImportSelector} may implement any of the following
  * {@link org.springframework.beans.factory.Aware Aware} interfaces,
  * and their respective methods will be called prior to {@link #selectImports}:
+ * 一个ImportSelector可能实现以下任何Aware接口,且他们各自的接口将在selectImports之前被调用
  * <ul>
  * <li>{@link org.springframework.context.EnvironmentAware EnvironmentAware}</li>
  * <li>{@link org.springframework.beans.factory.BeanFactoryAware BeanFactoryAware}</li>
@@ -35,6 +37,7 @@ import org.springframework.core.type.AnnotationMetadata;
  *
  * <p>Alternatively, the class may provide a single constructor with one or more of
  * the following supported parameter types:
+ * 或者,这个类可能提供一个带有一个或多个以下支持的参数类型的简单构造
  * <ul>
  * <li>{@link org.springframework.core.env.Environment Environment}</li>
  * <li>{@link org.springframework.beans.factory.BeanFactory BeanFactory}</li>
@@ -46,6 +49,8 @@ import org.springframework.core.type.AnnotationMetadata;
  * as regular {@code @Import} annotations, however, it is also possible to defer
  * selection of imports until all {@code @Configuration} classes have been processed
  * (see {@link DeferredImportSelector} for details).
+ * ImportSelect实现通常和常规的@Import注解一样处理.
+ * 但是,也可以选择退出导入 知道所有@Configuration类已经被处理完
  *
  * @author Chris Beams
  * @since 3.1
@@ -59,6 +64,7 @@ public interface ImportSelector {
 	/**
 	 * Select and return the names of which class(es) should be imported based on
 	 * the {@link AnnotationMetadata} of the importing @{@link Configuration} class.
+	 * 根据导入@Configuration类的注解元数据选择并返回应导入哪个类的名称
 	 */
 	String[] selectImports(AnnotationMetadata importingClassMetadata);
 

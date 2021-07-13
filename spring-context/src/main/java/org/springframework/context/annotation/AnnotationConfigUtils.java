@@ -44,6 +44,8 @@ import org.springframework.util.ClassUtils;
  * {@link org.springframework.beans.factory.config.BeanFactoryPostProcessor}
  * definitions for annotation-based configuration. Also registers a common
  * {@link org.springframework.beans.factory.support.AutowireCandidateResolver}.
+ * 允许方便的注册常见的BeanPostProcessor和BeanFactoryPostProcessor定义以进行基于注释的配置的实用工具类.
+ * 同样也注册一个通用的AutowireCandidateResolver
  *
  * @author Mark Fisher
  * @author Juergen Hoeller
@@ -139,6 +141,7 @@ public abstract class AnnotationConfigUtils {
 
 	/**
 	 * Register all relevant annotation post processors in the given registry.
+	 * 在给定的注册表中注册所有相关的注解后置处理器
 	 * @param registry the registry to operate on
 	 * @param source the configuration source element (already extracted)
 	 * that this registration was triggered from. May be {@code null}.

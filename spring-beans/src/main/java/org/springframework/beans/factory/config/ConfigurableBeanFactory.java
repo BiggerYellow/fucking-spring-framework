@@ -241,11 +241,14 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	/**
 	 * Add a new BeanPostProcessor that will get applied to beans created
 	 * by this factory. To be invoked during factory configuration.
+	 * 新增一个新的后置处理器 作用于通过工厂创建的bean。在工厂配置阶段被调用。
 	 * <p>Note: Post-processors submitted here will be applied in the order of
 	 * registration; any ordering semantics expressed through implementing the
 	 * {@link org.springframework.core.Ordered} interface will be ignored. Note
 	 * that autodetected post-processors (e.g. as beans in an ApplicationContext)
 	 * will always be applied after programmatically registered ones.
+	 * 注意：在此提交的后置处理器将按注册顺序申请。任何经由实现Order接口的排序语义将会失效。
+	 * 请注意，自动检测的后置处理器将始终以编程方式注册的后置处理器之后应用
 	 * @param beanPostProcessor the post-processor to register
 	 */
 	void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
@@ -325,6 +328,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory, Single
 	 * Return a merged BeanDefinition for the given bean name,
 	 * merging a child bean definition with its parent if necessary.
 	 * Considers bean definitions in ancestor factories as well.
+	 * 返回给定bean名称的已合并的bean定义,如果需要的话合并子bean定义通过他的父类.
+	 * 同样也考虑在祖先工厂中的bean定义
 	 * @param beanName the name of the bean to retrieve the merged definition for
 	 * @return a (potentially merged) BeanDefinition for the given bean
 	 * @throws NoSuchBeanDefinitionException if there is no bean definition with the given name

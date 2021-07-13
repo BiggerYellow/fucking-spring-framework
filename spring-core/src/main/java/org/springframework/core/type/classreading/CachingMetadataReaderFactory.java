@@ -30,6 +30,7 @@ import org.springframework.lang.Nullable;
  * Caching implementation of the {@link MetadataReaderFactory} interface,
  * caching a {@link MetadataReader} instance per Spring {@link Resource} handle
  * (i.e. per ".class" file).
+ * MetadataReaderFactory接口的缓存实现类,每个Spring Resource句柄(即每个class文件)缓存一个MetadataReader
  *
  * @author Juergen Hoeller
  * @author Costin Leau

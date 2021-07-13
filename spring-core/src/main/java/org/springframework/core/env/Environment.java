@@ -21,6 +21,8 @@ package org.springframework.core.env;
  * Models two key aspects of the application environment: <em>profiles</em> and
  * <em>properties</em>. Methods related to property access are exposed via the
  * {@link PropertyResolver} superinterface.
+ * 在当前运行的应用中 表明环境的接口。对应用环境的两个关键方面的模型:profiles和properties.
+ * 暴露访问属性的相关接口通过 父类PropertyResolver
  *
  * <p>A <em>profile</em> is a named, logical group of bean definitions to be registered
  * with the container only if the given profile is <em>active</em>. Beans may be assigned
@@ -30,6 +32,8 @@ package org.springframework.core.env;
  * in determining which profiles (if any) are currently {@linkplain #getActiveProfiles
  * active}, and which profiles (if any) should be {@linkplain #getDefaultProfiles active
  * by default}.
+ * profile是一个命名的，合理的bean定义组，只有当给定的profiles是active才向容器注册。bean可以分配给配置文件无论是在xml中定义或通过注解定义。
+ * Environment对象角色和profile的关系是确定当前哪些配置文件active,且哪些配置应该默认active
  *
  * <p><em>Properties</em> play an important role in almost all applications, and may
  * originate from a variety of sources: properties files, JVM system properties, system
@@ -37,10 +41,13 @@ package org.springframework.core.env;
  * Maps, and so on. The role of the environment object with relation to properties is to
  * provide the user with a convenient service interface for configuring property sources
  * and resolving properties from them.
+ * Properties扮演一个重要的角色在几乎所有的应用中，可能来自多种来源:配置文件，JVM系统属性，系统环境属性、JNDI、servlet容器参数、临时属性对象、map。
+ * 环境对象域属性相关的角色可以提供给用户方便的服务接口为了配置属性资源和解析属性
  *
  * <p>Beans managed within an {@code ApplicationContext} may register to be {@link
  * org.springframework.context.EnvironmentAware EnvironmentAware} or {@code @Inject} the
  * {@code Environment} in order to query profile state or resolve properties directly.
+ * 在ApplicationContext中管理的bean可以作为EnvironmentAware或@Inject 注入环境中注册 为了查询profile状态或直接解析属性
  *
  * <p>In most cases, however, application-level beans should not need to interact with the
  * {@code Environment} directly but instead may have to have {@code ${...}} property
@@ -49,12 +56,15 @@ package org.springframework.core.env;
  * PropertySourcesPlaceholderConfigurer}, which itself is {@code EnvironmentAware} and
  * as of Spring 3.1 is registered by default when using
  * {@code <context:property-placeholder/>}.
+ * 大部分情况下，但是应用级别的bean不应该直接和Environment相互作用，取而代之的应该有一个 ${}的属性替换通过一个属性占位符配置器：像PropertySourcesPlaceholderConfigurer，
+ * 他本身是EnvironmentAware 且当使用 <context:property-placeholder/>在spring3.1中默认注册
  *
  * <p>Configuration of the environment object must be done through the
  * {@code ConfigurableEnvironment} interface, returned from all
  * {@code AbstractApplicationContext} subclass {@code getEnvironment()} methods. See
  * {@link ConfigurableEnvironment} Javadoc for usage examples demonstrating manipulation
  * of property sources prior to application context {@code refresh()}.
+ * 环境的配置对象必须完成 通过ConfigurableEnvironment接口，从AbstractApplicationContext父接口的getEnvironment()方法返回。
  *
  * @author Chris Beams
  * @since 3.1

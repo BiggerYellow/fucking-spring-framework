@@ -20,10 +20,13 @@ package org.springframework.beans.factory;
  * Interface to be implemented by beans that need to react once all their properties
  * have been set by a {@link BeanFactory}: e.g. to perform custom initialization,
  * or merely to check that all mandatory properties have been set.
+ * 由bean实现的接口,一旦bean工厂设置了所有的属性,就需要做出反应.例如:执行自定义初始化,或只是为了检查是否已经设置了必须的属性
  *
  * <p>An alternative to implementing {@code InitializingBean} is specifying a custom
  * init method, for example in an XML bean definition. For a list of all bean
  * lifecycle methods, see the {@link BeanFactory BeanFactory javadocs}.
+ * 一个可替代实现InitializingBean的方法是 自定义初始化方法,例如 在xmlbean定义中.
+ * 获取所有bean生命周期的列表
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

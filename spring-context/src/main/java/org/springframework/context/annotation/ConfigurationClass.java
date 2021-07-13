@@ -38,6 +38,8 @@ import org.springframework.util.ClassUtils;
  * Represents a user-defined {@link Configuration @Configuration} class.
  * Includes a set of {@link Bean} methods, including all such methods
  * defined in the ancestry of the class, in a 'flattened-out' manner.
+ * 代表一个用户定义的@Configuration类.
+ * 包括一系列bean方法,包好在类的祖先中以扁平化方式定义的所有此类方法
  *
  * @author Chris Beams
  * @author Juergen Hoeller
@@ -160,6 +162,7 @@ final class ConfigurationClass {
 	/**
 	 * Return whether this configuration class was registered via @{@link Import} or
 	 * automatically registered due to being nested within another configuration class.
+	 * 返回这个配置类是否通过Import注册 或 由于嵌套在另一个配置类中而自动注册
 	 * @since 3.1.1
 	 * @see #getImportedBy()
 	 */
@@ -211,6 +214,7 @@ final class ConfigurationClass {
 
 	public void validate(ProblemReporter problemReporter) {
 		// A configuration class may not be final (CGLIB limitation) unless it declares proxyBeanMethods=false
+		//一个配置类不应该是final(CGLIB限制) 除非他声明proxyBeanMethods为false
 		Map<String, Object> attributes = this.metadata.getAnnotationAttributes(Configuration.class.getName());
 		if (attributes != null && (Boolean) attributes.get("proxyBeanMethods")) {
 			if (this.metadata.isFinal()) {

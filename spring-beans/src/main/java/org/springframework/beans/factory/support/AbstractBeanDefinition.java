@@ -412,6 +412,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return the class of the wrapped bean (assuming it is resolved already).
+	 * 返回被包裹的bean类(假设他已经解析过了)
 	 * @return the bean class (never {@code null})
 	 * @throws IllegalStateException if the bean definition does not define a bean class,
 	 * or a specified bean class name has not been resolved into an actual Class yet
@@ -433,7 +434,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return whether this definition specifies a bean class.
-	 * 返回此定义是否指定bean类
+	 * 返回此定义是否指定了一个bean类
 	 * @see #getBeanClass()
 	 * @see #setBeanClass(Class)
 	 * @see #resolveBeanClass(ClassLoader)
@@ -528,6 +529,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * Return whether this bean is "abstract", i.e. not meant to be instantiated
 	 * itself but rather just serving as parent for concrete child bean definitions.
+	 * 返回这个bean是否是抽象的,也就是 意味着不初始化本身而是只作为父类为具体的子bean定义服务
 	 */
 	@Override
 	public boolean isAbstract() {
@@ -752,6 +754,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return a callback for creating an instance of the bean, if any.
+	 * 返回一个创建这个bean实例的回调,如果有的话
 	 * @since 5.0
 	 */
 	@Nullable
@@ -885,6 +888,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return if there are property values values defined for this bean.
+	 * 如果有为此bean定义的属性值,则返回
 	 * @since 5.0.2
 	 */
 	@Override
@@ -910,6 +914,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return if there are method overrides defined for this bean.
+	 * 如果有为此bean定义的方法覆盖,则返回
 	 * @since 5.0.2
 	 */
 	public boolean hasMethodOverrides() {
@@ -998,6 +1003,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * Return whether this bean definition is 'synthetic', that is,
 	 * not defined by the application itself.
+	 * 返回此bean定义是否是合成的,即不是由应用程序本身定义的
 	 */
 	public boolean isSynthetic() {
 		return this.synthetic;
@@ -1092,14 +1098,17 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Validate this bean definition.
+	 * 校验bean定义
 	 * @throws BeanDefinitionValidationException in case of validation failure
 	 */
 	public void validate() throws BeanDefinitionValidationException {
+		//是否存在覆盖方法 且 当前bean定义是否为工厂  即工厂方法不能有覆盖方法,工厂方法必须是一个具体的bean实例
 		if (hasMethodOverrides() && getFactoryMethodName() != null) {
 			throw new BeanDefinitionValidationException(
 					"Cannot combine factory method with container-generated method overrides: " +
 					"the factory method must create the concrete bean instance.");
 		}
+		//此bean是否指定一个bean类
 		if (hasBeanClass()) {
 			prepareMethodOverrides();
 		}
@@ -1108,10 +1117,13 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * Validate and prepare the method overrides defined for this bean.
 	 * Checks for existence of a method with the specified name.
+	 * 校验和准备为 这个bean定义的重写方法
+	 * 检查具有指定名称的方法是否存在
 	 * @throws BeanDefinitionValidationException in case of validation failure
 	 */
 	public void prepareMethodOverrides() throws BeanDefinitionValidationException {
 		// Check that lookup methods exist and determine their overloaded status.
+		//检查查找方法是否存在并确定他们的重载状态
 		if (hasMethodOverrides()) {
 			getMethodOverrides().getOverrides().forEach(this::prepareMethodOverride);
 		}
@@ -1121,6 +1133,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 * Validate and prepare the given method override.
 	 * Checks for existence of a method with the specified name,
 	 * marking it as not overloaded if none found.
+	 * 校验和准备给定的覆盖方法.
+	 * 检查指定名称的方法是否存在,如果什么都没有发现,标记该方法不用重载
 	 * @param mo the MethodOverride object to validate
 	 * @throws BeanDefinitionValidationException in case of validation failure
 	 */
@@ -1133,6 +1147,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 		}
 		else if (count == 1) {
 			// Mark override as not overloaded, to avoid the overhead of arg type checking.
+			//将覆盖标记为未重载,以避免arg类型检查的开销
 			mo.setOverloaded(false);
 		}
 	}

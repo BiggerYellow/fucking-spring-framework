@@ -41,9 +41,11 @@ import org.springframework.util.StringUtils;
 
 /**
  * Default object instantiation strategy for use in BeanFactories.
+ * 在bean工厂中使用的默认实例化策略.
  *
  * <p>Uses CGLIB to generate subclasses dynamically if methods need to be
  * overridden by the container to implement <em>Method Injection</em>.
+ * 使用cglib来动态生成子类 如果方法需要被容器覆盖以实现方法注入
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

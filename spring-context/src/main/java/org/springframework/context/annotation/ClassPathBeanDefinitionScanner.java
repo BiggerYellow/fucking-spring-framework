@@ -308,6 +308,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 					definitionHolder =
 							AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
 					beanDefinitions.add(definitionHolder);
+					//将扫描出来的类注册到注册表中
 					registerBeanDefinition(definitionHolder, this.registry);
 				}
 			}
@@ -331,8 +332,10 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 
 	/**
 	 * Register the specified bean with the given registry.
+	 * 通过给定的注册表注册指定的bean
 	 * <p>Can be overridden in subclasses, e.g. to adapt the registration
 	 * process or to register further bean definitions for each scanned bean.
+	 * 可以在子类中覆盖,例如 调整注册处理 或 为每个扫描的bean注册更多的bean定义
 	 * @param definitionHolder the bean definition plus bean name for the bean
 	 * @param registry the BeanDefinitionRegistry to register the bean with
 	 */

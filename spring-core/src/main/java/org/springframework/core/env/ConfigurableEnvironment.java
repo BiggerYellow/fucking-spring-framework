@@ -24,16 +24,22 @@ import java.util.Map;
  * property sources. Allows clients to set and validate required properties, customize the
  * conversion service and more through the {@link ConfigurablePropertyResolver}
  * superinterface.
+ * 大部分Environment类型要实现的配置接口。提供设置active与默认profiles 和 操作底层属性资源的能力。
+ * 运行客户端取设置和校验需要的属性、自定义转换服务以及更多的功能 通过ConfigurablePropertyResolver弗雷看
  *
  * <h2>Manipulating property sources</h2>
+ * 操作属性资源
  * <p>Property sources may be removed, reordered, or replaced; and additional
  * property sources may be added using the {@link MutablePropertySources}
  * instance returned from {@link #getPropertySources()}. The following examples
  * are against the {@link StandardEnvironment} implementation of
  * {@code ConfigurableEnvironment}, but are generally applicable to any implementation,
  * though particular default property sources may differ.
+ * 属性资源可能被移除、重排序、或代替。且附加的属性资源可能使用从getPropertySource()返回的MutablePropertySources来添加。
+ * 以下示例针对StandardEnvironment的实现的ConfigurableEnvironment，但通常适用于任何实现，尽管特定的默认属性来源可能不同
  *
  * <h4>Example: adding a new property source with highest search priority</h4>
+ * 示例：添加一个高优先级的属性资源
  * <pre class="code">
  * ConfigurableEnvironment environment = new StandardEnvironment();
  * MutablePropertySources propertySources = environment.getPropertySources();
@@ -43,12 +49,14 @@ import java.util.Map;
  * </pre>
  *
  * <h4>Example: removing the default system properties property source</h4>
+ * 示例：移除默认系统属性资源
  * <pre class="code">
  * MutablePropertySources propertySources = environment.getPropertySources();
  * propertySources.remove(StandardEnvironment.SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME)
  * </pre>
  *
  * <h4>Example: mocking the system environment for testing purposes</h4>
+ *
  * <pre class="code">
  * MutablePropertySources propertySources = environment.getPropertySources();
  * MockPropertySource mockEnvVars = new MockPropertySource().withProperty("xyz", "myValue");
@@ -63,6 +71,8 @@ import java.util.Map;
  * container bootstrap process, including use by {@linkplain
  * org.springframework.context.support.PropertySourcesPlaceholderConfigurer property
  * placeholder configurers}.
+ * 当一个Environment被一个ApplicationContext使用时， 在上下文调用refresh()前执行任何这样的属性操作是重要的。
+ * 这保证所有属性资源都是有用的在容器启动期间，包括被PropertySourcesPlaceholderConfigurer使用
  *
  * @author Chris Beams
  * @since 3.1

@@ -289,6 +289,8 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	 * Apply {@link BeanPostProcessor BeanPostProcessors} to the given existing bean
 	 * instance, invoking their {@code postProcessBeforeInitialization} methods.
 	 * The returned bean instance may be a wrapper around the original.
+	 * 将后置处理器BeanPostProcessor应用到给定的现有的bean实例,调用他们的postProcessBeforeInitialization方法.
+	 * 返回的bean实例可能是原始实例的包装器
 	 * @param existingBean the existing bean instance
 	 * @param beanName the name of the bean, to be passed to it if necessary
 	 * (only passed to {@link BeanPostProcessor BeanPostProcessors};

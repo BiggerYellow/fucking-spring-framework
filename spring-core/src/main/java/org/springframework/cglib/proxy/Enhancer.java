@@ -199,6 +199,7 @@ public class Enhancer extends AbstractClassGenerator {
 
 	/**
 	 * Internal interface, only public due to ClassLoader issues.
+	 * 内部接口,由于类加载器问题仅公开
 	 */
 	public interface EnhancerKey {
 
@@ -405,10 +406,14 @@ public class Enhancer extends AbstractClassGenerator {
 
 	/**
 	 * Generate a new class if necessary and return it without creating a new instance.
+	 * 如果有必要的话,生成一个新类并在不创建实例的情况下返回他
 	 * This ignores any callbacks that have been set.
+	 * 这将忽略已经设置的回调
 	 * To create a new instance you will have to use reflection, and methods
 	 * called during the constructor will not be intercepted. To avoid this problem,
 	 * use the multi-arg <code>create</code> method.
+	 * 要创建新实例,你必须使用反射,并且不会拦截在构造函数期间调用的方法。
+	 * 为了避免这个问题,使用多参数的创建方法
 	 * @see #create(Class[], Object[])
 	 */
 	public Class createClass() {
@@ -859,8 +864,11 @@ public class Enhancer extends AbstractClassGenerator {
 	/**
 	 * Similar to {@link #registerCallbacks}, but suitable for use
 	 * when multiple threads will be creating instances of the generated class.
+	 * 类似于registerCallbacks,但适合于多个线程创建生成类的实例时使用
 	 * The thread-level callbacks will always override the static callbacks.
 	 * Static callbacks are never cleared.
+	 * 线程基本的回调将总是覆盖静态回调
+	 * 静态回调永远不会清除
 	 * @param generatedClass a class previously created by {@link Enhancer}
 	 * @param callbacks the array of callbacks to use when instances of the generated
 	 * class are created

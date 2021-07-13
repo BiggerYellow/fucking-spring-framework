@@ -27,6 +27,7 @@ import org.springframework.lang.Nullable;
  * servlet-related {@link org.springframework.core.env.PropertySource} objects at the
  * earliest moment that the {@link ServletContext} and (optionally) {@link ServletConfig}
  * become available.
+ * ConfigurableEnvironment的特殊化，允许初始化servlet相关的PropertySource对象在早期servlet上下文和servlet配置都可用的时候
  *
  * @author Chris Beams
  * @since 3.1.2

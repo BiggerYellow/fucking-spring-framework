@@ -36,7 +36,7 @@ import org.springframework.util.Assert;
 /**
  * Common delegate code for the handling of parser strategies, e.g.
  * {@code TypeFilter}, {@code ImportSelector}, {@code ImportBeanDefinitionRegistrar}
- *
+ * 处理解析器策略的通用未委托代码 例如 TypeFilter、ImportSelector、ImportBeanDefinitionRegistrar
  * @author Juergen Hoeller
  * @author Phillip Webb
  * @since 4.3.3
@@ -49,6 +49,8 @@ abstract class ParserStrategyUtils {
 	 * have {@link BeanClassLoaderAware}, {@link BeanFactoryAware},
 	 * {@link EnvironmentAware}, and {@link ResourceLoaderAware} contracts
 	 * invoked if they are implemented by the given object.
+	 * 使用恰当构造初始化类 且 返回一个新的实例 作为指定的类型.
+	 * 如果他们实现了给定的对象,返回的水里将有BeanClassLoaderAware、BeanFactoryAware、EnvironmentAware、ResourceLoaderAware约束
 	 * @since 5.2
 	 */
 	@SuppressWarnings("unchecked")

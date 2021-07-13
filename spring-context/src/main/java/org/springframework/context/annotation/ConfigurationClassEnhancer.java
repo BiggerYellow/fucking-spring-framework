@@ -92,6 +92,7 @@ class ConfigurationClassEnhancer {
 	/**
 	 * Loads the specified class and generates a CGLIB subclass of it equipped with
 	 * container-aware callbacks capable of respecting scoping and other bean semantics.
+	 * 加载指定的类且生成他的CGLIB子类，该子类配配备了能够尊重范围和其他bean语义的容器感知回调
 	 * @return the enhanced subclass
 	 */
 	public Class<?> enhance(Class<?> configClass, @Nullable ClassLoader classLoader) {
@@ -106,6 +107,7 @@ class ConfigurationClassEnhancer {
 			}
 			return configClass;
 		}
+		//创建增强类
 		Class<?> enhancedClass = createClass(newEnhancer(configClass, classLoader));
 		if (logger.isTraceEnabled()) {
 			logger.trace(String.format("Successfully enhanced %s; enhanced class name is: %s",
@@ -116,6 +118,7 @@ class ConfigurationClassEnhancer {
 
 	/**
 	 * Creates a new CGLIB {@link Enhancer} instance.
+	 * 创建一个新的CGLIB增强实例
 	 */
 	private Enhancer newEnhancer(Class<?> configSuperClass, @Nullable ClassLoader classLoader) {
 		Enhancer enhancer = new Enhancer();
@@ -132,11 +135,14 @@ class ConfigurationClassEnhancer {
 	/**
 	 * Uses enhancer to generate a subclass of superclass,
 	 * ensuring that callbacks are registered for the new subclass.
+	 * 使用增强类来生成超类的子类,保证为新子类创建回调
 	 */
 	private Class<?> createClass(Enhancer enhancer) {
 		Class<?> subclass = enhancer.createClass();
 		// Registering callbacks statically (as opposed to thread-local)
 		// is critical for usage in an OSGi environment (SPR-5932)...
+		//静态注册回调(与本地线程相反)
+		//对OSGI环境至关重要
 		Enhancer.registerStaticCallbacks(subclass, CALLBACKS);
 		return subclass;
 	}

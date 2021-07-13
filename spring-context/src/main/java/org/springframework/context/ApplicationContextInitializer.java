@@ -19,17 +19,21 @@ package org.springframework.context;
 /**
  * Callback interface for initializing a Spring {@link ConfigurableApplicationContext}
  * prior to being {@linkplain ConfigurableApplicationContext#refresh() refreshed}.
+ * 用于在ConfigurableApplicationContext#refresh刷新之前初始化Spring ConfigurableApplicationContext的回调接口
  *
  * <p>Typically used within web applications that require some programmatic initialization
  * of the application context. For example, registering property sources or activating
  * profiles against the {@linkplain ConfigurableApplicationContext#getEnvironment()
  * context's environment}. See {@code ContextLoader} and {@code FrameworkServlet} support
  * for declaring a "contextInitializerClasses" context-param and init-param, respectively.
+ * 通常需要对应用上下文进行一些编程初始化的web应用程序中使用。例如:注册属性资源或通过ConfigurableApplicationContext#getEnvironment()激活profiles
+ * 请参阅ContextLoader和FrameworkServlet支持分别声明 contextInitializerClasses 上下文参数和初始化参数
  *
  * <p>{@code ApplicationContextInitializer} processors are encouraged to detect
  * whether Spring's {@link org.springframework.core.Ordered Ordered} interface has been
  * implemented or if the @{@link org.springframework.core.annotation.Order Order}
  * annotation is present and to sort instances accordingly if so prior to invocation.
+ * 鼓励ApplicationContextInitializer处理器检测Spring的Ordered接口是否被实现 或 Order注解是否存在 并对实例进行排序,如果在调用之前是这样
  *
  * @author Chris Beams
  * @since 3.1

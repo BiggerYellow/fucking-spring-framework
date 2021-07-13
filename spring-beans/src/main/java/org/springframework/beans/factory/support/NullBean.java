@@ -22,6 +22,7 @@ import org.springframework.lang.Nullable;
 /**
  * Internal representation of a null bean instance, e.g. for a {@code null} value
  * returned from {@link FactoryBean#getObject()} or from a factory method.
+ * 空bean实例的内部表示,例如 从FactoryBean#getObject() 或 一个工厂方法返回的空值
  *
  * <p>Each such null bean is represented by a dedicated {@code NullBean} instance
  * which are not equal to each other, uniquely differentiating each bean as returned
@@ -29,6 +30,7 @@ import org.springframework.lang.Nullable;
  * However, each such instance will return {@code true} for {@code #equals(null)}
  * and returns "null" from {@code #toString()}, which is how they can be tested
  * externally (since this class itself is not public).
+ * 每个这样的空bean由一个专用的空bean实例表示, 这些实例互不相同, 唯一的区别在从BeanFactory#getBean的所有变体中返回的每个bean
  *
  * @author Juergen Hoeller
  * @since 5.0

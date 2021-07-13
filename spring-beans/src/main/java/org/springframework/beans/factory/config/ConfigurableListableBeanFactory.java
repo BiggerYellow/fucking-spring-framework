@@ -51,7 +51,7 @@ public interface ConfigurableListableBeanFactory
 
 	/**
 	 * Ignore the given dependency interface for autowiring.
-	 * 注入时忽略给定的接口依赖
+	 * 忽略给定的接口依赖的自动装配功能
 	 * <p>This will typically be used by application contexts to register
 	 * dependencies that are resolved in other ways, like BeanFactory through
 	 * BeanFactoryAware or ApplicationContext through ApplicationContextAware.
@@ -67,12 +67,16 @@ public interface ConfigurableListableBeanFactory
 
 	/**
 	 * Register a special dependency type with corresponding autowired value.
+	 * 使用相应的自动装配的值注册一个特殊的依赖类型.
 	 * <p>This is intended for factory/context references that are supposed
 	 * to be autowirable but are not defined as beans in the factory:
+	 * 这用于工厂或上下文应用，这些引用是可以自动装配的，但是在工厂中没有定义为bean
 	 * e.g. a dependency of type ApplicationContext resolved to the
 	 * ApplicationContext instance that the bean is living in.
+	 * ApplicationContext类型的依赖解析为bean所在的ApplicationContext实例
 	 * <p>Note: There are no such default types registered in a plain BeanFactory,
 	 * not even for the BeanFactory interface itself.
+	 * 注意：在普通工厂中没有注册这样的默认类型，甚至不是beanFactory接口本身
 	 * @param dependencyType the dependency type to register. This will typically
 	 * be a base interface such as BeanFactory, with extensions of it resolved
 	 * as well if declared as an autowiring dependency (e.g. ListableBeanFactory),
@@ -154,7 +158,9 @@ public interface ConfigurableListableBeanFactory
 	/**
 	 * Ensure that all non-lazy-init singletons are instantiated, also considering
 	 * {@link org.springframework.beans.factory.FactoryBean FactoryBeans}.
+	 * 保证所有的非懒加载的单例已经初始化,同时页考虑工厂bean.
 	 * Typically invoked at the end of factory setup, if desired.
+	 * 如果需要通常在工厂设置结束时调用
 	 * @throws BeansException if one of the singleton beans could not be created.
 	 * Note: This may have left the factory with some beans already initialized!
 	 * Call {@link #destroySingletons()} for full cleanup in this case.

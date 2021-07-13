@@ -72,16 +72,21 @@ public interface FactoryBean<T> {
 	/**
 	 * Return an instance (possibly shared or independent) of the object
 	 * managed by this factory.
+	 * 返回被整个工厂管理的实例对象(可能共享或独立)
 	 * <p>As with a {@link BeanFactory}, this allows support for both the
 	 * Singleton and Prototype design pattern.
+	 * 和工厂bean一样 这还允许支持 单例和原型设计模式
 	 * <p>If this FactoryBean is not fully initialized yet at the time of
 	 * the call (for example because it is involved in a circular reference),
 	 * throw a corresponding {@link FactoryBeanNotInitializedException}.
+	 * 如果工厂bean还没有完全实例化 在这个调用的时间内(例如 涉及到循环依赖),抛出FactoryBeanNotInitializedException异常
 	 * <p>As of Spring 2.0, FactoryBeans are allowed to return {@code null}
 	 * objects. The factory will consider this as normal value to be used; it
 	 * will not throw a FactoryBeanNotInitializedException in this case anymore.
+	 * 从Spring2.0开始,工厂bean允许返回空对象。 工厂将此视为使用的正常值.它将不会抛出异常
 	 * FactoryBean implementations are encouraged to throw
 	 * FactoryBeanNotInitializedException themselves now, as appropriate.
+	 * 鼓励工厂bean实现现在抛出FactoryBeanNotInitializedException自己
 	 * @return an instance of the bean (can be {@code null})
 	 * @throws Exception in case of creation errors
 	 * @see FactoryBeanNotInitializedException

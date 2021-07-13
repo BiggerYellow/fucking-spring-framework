@@ -43,7 +43,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Utilities for identifying {@link Configuration} classes.
- *
+ * 确认Configuration类的工具类
  * @author Chris Beams
  * @author Juergen Hoeller
  * @since 3.1
@@ -77,6 +77,7 @@ abstract class ConfigurationClassUtils {
 	 * Check whether the given bean definition is a candidate for a configuration class
 	 * (or a nested component class declared within a configuration/component class,
 	 * to be auto-registered as well), and mark it accordingly.
+	 * 检查给定的bean定义是否是配置类的候选者(或在配置/组件类中声明的嵌套组件类,也可以自动注册),并且相应的标记他
 	 * @param beanDef the bean definition to check
 	 * @param metadataReaderFactory the current factory in use by the caller
 	 * @return whether the candidate qualifies as (any kind of) configuration class
@@ -90,14 +91,19 @@ abstract class ConfigurationClassUtils {
 		}
 
 		AnnotationMetadata metadata;
+		//当前bean定义是否属于注解相关的bean定义
 		if (beanDef instanceof AnnotatedBeanDefinition &&
+				//当前bean定义的类名是否与AnnotationMetadata的类名一致
 				className.equals(((AnnotatedBeanDefinition) beanDef).getMetadata().getClassName())) {
 			// Can reuse the pre-parsed metadata from the given BeanDefinition...
+			// 可以重复使用来自给定bean定义的预解析元数据   主要获取启动类的元数据
 			metadata = ((AnnotatedBeanDefinition) beanDef).getMetadata();
 		}
 		else if (beanDef instanceof AbstractBeanDefinition && ((AbstractBeanDefinition) beanDef).hasBeanClass()) {
 			// Check already loaded Class if present...
+			//检查已加载的类 如果存在的话
 			// since we possibly can't even load the class file for this Class.
+			//因为我们甚至可能无法加载此类的类文件
 			Class<?> beanClass = ((AbstractBeanDefinition) beanDef).getBeanClass();
 			if (BeanFactoryPostProcessor.class.isAssignableFrom(beanClass) ||
 					BeanPostProcessor.class.isAssignableFrom(beanClass) ||
@@ -121,6 +127,7 @@ abstract class ConfigurationClassUtils {
 			}
 		}
 
+		//从元数据中获取Configuration注解的属性
 		Map<String, Object> config = metadata.getAnnotationAttributes(Configuration.class.getName());
 		if (config != null && !Boolean.FALSE.equals(config.get("proxyBeanMethods"))) {
 			beanDef.setAttribute(CONFIGURATION_CLASS_ATTRIBUTE, CONFIGURATION_CLASS_FULL);
@@ -133,6 +140,7 @@ abstract class ConfigurationClassUtils {
 		}
 
 		// It's a full or lite configuration candidate... Let's determine the order value, if any.
+		//他是完整或精简的配置候选  确认他的优先级值,如果有的话
 		Integer order = getOrder(metadata);
 		if (order != null) {
 			beanDef.setAttribute(ORDER_ATTRIBUTE, order);

@@ -23,13 +23,17 @@ import org.springframework.lang.Nullable;
  * A variation of {@link ImportSelector} that runs after all {@code @Configuration} beans
  * have been processed. This type of selector can be particularly useful when the selected
  * imports are {@code @Conditional}.
+ * ImportSelector的变种, 在所有@Configuration bean都被处理后执行.
+ * 当选择的import是@Conditional修饰的 这种类型的选择器特别有用
  *
  * <p>Implementations can also extend the {@link org.springframework.core.Ordered}
  * interface or use the {@link org.springframework.core.annotation.Order} annotation to
  * indicate a precedence against other {@link DeferredImportSelector DeferredImportSelectors}.
+ * 实现类可以继承Ordered接口或使用@Order注解来表明优于其他的DeferredImportSelectors
  *
  * <p>Implementations may also provide an {@link #getImportGroup() import group} which
  * can provide additional sorting and filtering logic across different selectors.
+ * 实现类可能提供一个getImportGroup()导入组, 他可以跨不同的选择器提供额外的排序和过了
  *
  * @author Phillip Webb
  * @author Stephane Nicoll
@@ -39,7 +43,9 @@ public interface DeferredImportSelector extends ImportSelector {
 
 	/**
 	 * Return a specific import group.
+	 * 返回一个特殊的导入组
 	 * <p>The default implementations return {@code null} for no grouping required.
+	 * 默认实现返回空 如果没有组需要
 	 * @return the import group class, or {@code null} if none
 	 * @since 5.0
 	 */

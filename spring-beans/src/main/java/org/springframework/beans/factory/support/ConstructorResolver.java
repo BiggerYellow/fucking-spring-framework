@@ -67,6 +67,8 @@ import org.springframework.util.StringUtils;
 /**
  * Delegate for resolving constructors and factory methods.
  * <p>Performs constructor resolution through argument matching.
+ * 用于解析构造函数的和工厂方法的解脱.
+ * 通过参数匹配执行构造函数解析
  *
  * @author Juergen Hoeller
  * @author Rob Harrop
@@ -370,11 +372,14 @@ class ConstructorResolver {
 	 * Instantiate the bean using a named factory method. The method may be static, if the
 	 * bean definition parameter specifies a class, rather than a "factory-bean", or
 	 * an instance variable on a factory object itself configured using Dependency Injection.
+	 * 使用命名工厂方法实例化bean.这个方法可能是静态的,如果bean定义参数指定一个类,而不是一个工厂bean,或使用依赖注入配置工厂本身的实例变量
 	 * <p>Implementation requires iterating over the static or instance methods with the
 	 * name specified in the RootBeanDefinition (the method may be overloaded) and trying
 	 * to match with the parameters. We don't have the types attached to constructor args,
 	 * so trial and error is the only way to go here. The explicitArgs array may contain
 	 * argument values passed in programmatically via the corresponding getBean method.
+	 * 实现需要使用RootBeanDefinition中指定的名称迭代静态或实例方法(该方法可能被重载) 且尝试去匹配参数.
+	 * 我们没有附加到构造参数的类型,所以反复试验是唯一的方法. 显示参数数组 可能包含通过相关getBean方法以编程方式输入的参数值
 	 * @param beanName the name of the bean
 	 * @param mbd the merged bean definition for the bean
 	 * @param explicitArgs argument values passed in programmatically via the getBean

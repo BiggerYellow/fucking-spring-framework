@@ -134,6 +134,8 @@ public interface BeanFactory {
 	 * beans <i>created</i> by the FactoryBean. For example, if the bean named
 	 * {@code myJndiObject} is a FactoryBean, getting {@code &myJndiObject}
 	 * will return the factory, not the instance returned by the factory.
+	 * 用于取消引用FactoryBean实例并将通过FactoryBean创建的bean区分开来。
+	 * 例如:如果一个名叫myJndiObject的bean是一个工厂bean,获取&myJndiObject将返回工厂,而不是通过工厂返回的实例
 	 */
 	String FACTORY_BEAN_PREFIX = "&";
 
@@ -154,12 +156,17 @@ public interface BeanFactory {
 
 	/**
 	 * Return an instance, which may be shared or independent, of the specified bean.
+	 * 返回指定bean的一个实例,该实例可以是共享的也可以是独立的
 	 * <p>Behaves the same as {@link #getBean(String)}, but provides a measure of type
 	 * safety by throwing a BeanNotOfRequiredTypeException if the bean is not of the
 	 * required type. This means that ClassCastException can't be thrown on casting
 	 * the result correctly, as can happen with {@link #getBean(String)}.
+	 * 与getBean(string)的行为相同,但是提供类型安全的度量 通过抛出一个BeanNotOfRequiredTypeException 如果bean不是需要的类型.
+	 * 这意味着不能正确投射结果时抛出ClassCastException,就像可以发生在getBean(String)一样
 	 * <p>Translates aliases back to the corresponding canonical bean name.
 	 * Will ask the parent factory if the bean cannot be found in this factory instance.
+	 * 将别名翻译回相应的规范的bean名称.
+	 * 如果bean不能在工厂实例中被发现,将请求父工厂
 	 * @param name the name of the bean to retrieve
 	 * @param requiredType type the bean must match; can be an interface or superclass
 	 * @return an instance of the bean
@@ -322,6 +329,9 @@ public interface BeanFactory {
 	 * would return an object that is assignable to the specified target type.
 	 * <p>Translates aliases back to the corresponding canonical bean name.
 	 * Will ask the parent factory if the bean cannot be found in this factory instance.
+	 * 检查给定名称的bean是否匹配指定的类型.
+	 * 更具体的说,检查给定名称的getBean方法调用是否返回一个可分配给指定目标类型的对象.
+	 * 将别名翻译回相应的规范bean名称.如果bean不能在工厂实例中发现将请求父工厂
 	 * @param name the name of the bean to query
 	 * @param typeToMatch the type to match against (as a {@code Class})
 	 * @return {@code true} if the bean type matches,

@@ -66,6 +66,7 @@ public class RootBeanDefinition extends AbstractBeanDefinition {
 	private AnnotatedElement qualifiedElement;
 
 	/** Determines if the definition needs to be re-merged. */
+	// 确定是否需要重新合并定义
 	volatile boolean stale;
 
 	boolean allowCaching = true;
@@ -80,6 +81,7 @@ public class RootBeanDefinition extends AbstractBeanDefinition {
 	volatile Class<?> resolvedTargetType;
 
 	/** Package-visible field for caching if the bean is a factory bean. */
+	//如果当前bean是工厂bean,则用于缓存的包可见字段
 	@Nullable
 	volatile Boolean isFactoryBean;
 
@@ -283,6 +285,7 @@ public class RootBeanDefinition extends AbstractBeanDefinition {
 
 	/**
 	 * Return the target definition that is being decorated by this bean definition, if any.
+	 * 如果有的话,返回此bean定义正在修饰的目标定义
 	 */
 	@Nullable
 	public BeanDefinitionHolder getDecoratedDefinition() {
@@ -328,6 +331,7 @@ public class RootBeanDefinition extends AbstractBeanDefinition {
 
 	/**
 	 * Return the target type of this bean definition, if known
+	 * 如果已知的话，返回bean定义的目标类型
 	 * (either specified in advance or resolved on first instantiation).
 	 * @since 3.2.2
 	 */

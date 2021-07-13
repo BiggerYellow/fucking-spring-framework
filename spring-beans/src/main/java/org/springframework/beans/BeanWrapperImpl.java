@@ -33,6 +33,7 @@ import org.springframework.util.ReflectionUtils;
 /**
  * Default {@link BeanWrapper} implementation that should be sufficient
  * for all typical use cases. Caches introspection results for efficiency.
+ * 默认BeanWrapper实现应该足以满足所有典型用例.缓存内省结果以提高效率
  *
  * <p>Note: Auto-registers default property editors from the
  * {@code org.springframework.beans.propertyeditors} package, which apply
@@ -41,6 +42,8 @@ import org.springframework.util.ReflectionUtils;
  * to register an editor for a particular instance (i.e. they are not shared
  * across the application). See the base class
  * {@link PropertyEditorRegistrySupport} for details.
+ * 注意:自动注册propertyeditors包中的默认属性编辑器.除了JDK标准的PropertyEditors之外，他也适用。
+ * 应用可以调用registerCustomEditor方法来为特殊的实例注册一个编辑器.
  *
  * <p><b>NOTE: As of Spring 2.5, this is - for almost all purposes - an
  * internal class.</b> It is just public in order to allow for access from
