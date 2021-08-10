@@ -80,11 +80,15 @@ import org.springframework.util.StringValueResolver;
  * annotations in the {@code javax.annotation} package. These common Java
  * annotations are supported in many Java EE 5 technologies (e.g. JSF 1.2),
  * as well as in Java 6's JAX-WS.
+ * BeanPostProcessor的实现,他支持开箱即用的java注解,特别是在annotion包中的JSR-250注解.
+ * 这些通用java注解支持在 选定javaee 5技术中
  *
  * <p>This post-processor includes support for the {@link javax.annotation.PostConstruct}
  * and {@link javax.annotation.PreDestroy} annotations - as init annotation
  * and destroy annotation, respectively - through inheriting from
  * {@link InitDestroyAnnotationBeanPostProcessor} with pre-configured annotation types.
+ * 这个后置处理器包括对PostConstruct和PreDestroy注解的支持 - 作为初始化注解和销毁注解.
+ * 通过带有预配置注解类型的InitDestroyAnnotationBeanPostProcessor支持
  *
  * <p>The central element is the {@link javax.annotation.Resource} annotation
  * for annotation-driven injection of named beans, by default from the containing
@@ -93,6 +97,9 @@ import org.springframework.util.StringValueResolver;
  * equivalent to standard Java EE 5 resource injection for {@code name} references
  * and default names as well. The target beans can be simple POJOs, with no special
  * requirements other than the type having to match.
+ * 中心元素是Resource注解,用于命名bean的注解驱动注入,默认情况下来自包含的Spring 工厂bean,在JNDI中只解析mapperName引用。
+ * alwaysUseJndiLookup标志对名字引用和默认名称强制执行等效于标准javaee5资源注入的资源查找
+ * 目标bean可以是简单的pojo,除了必须匹配的类型之外没有其他的需求
  *
  * <p>The JAX-WS {@link javax.xml.ws.WebServiceRef} annotation is supported too,
  * analogous to {@link javax.annotation.Resource} but with the capability of creating
@@ -102,14 +109,21 @@ import org.springframework.util.StringValueResolver;
  * analogous to {@link javax.annotation.Resource} as well, with the capability to
  * specify both a local bean name and a global JNDI name for fallback retrieval.
  * The target beans can be plain POJOs as well as EJB 3 Session Beans in this case.
+ * JAX-WS的WebServiceRef注解也支持,类似于Resource注解,但是具有创建特定JAX-WS服务端点的能力.
+ * 这可以通过名称指向显示定义的资源,也可以对本地指定的JAX-WS服务类进行操作.
+ * 最后,这个后置处理器也支持EJB注解,同样类似于Resource注解,具有为回退检索指定本地bean名称和全局JNDI名称的能力。
+ * 在这种情况下,目标bean可以是普通的pojo以及 EJB会话bean.
  *
  * <p>The common annotations supported by this post-processor are available in
  * Java 6 (JDK 1.6) as well as in Java EE 5/6 (which provides a standalone jar for
  * its common annotations as well, allowing for use in any Java 5 based application).
+ * 此后置处理器支持的通用注解在java6和java5中可用
  *
  * <p>For default usage, resolving resource names as Spring bean names,
  * simply define the following in your application context:
+ * 对于默认用法,将资源名称解析为Spring bean名称,只需要在应用程序上下文中定义以下内容
  *
+ * 主要是在xml的配置方式
  * <pre class="code">
  * &lt;bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/&gt;</pre>
  *
@@ -125,6 +139,8 @@ import org.springframework.util.StringValueResolver;
  * allowing for global JNDI names (including "java:" prefix) as well. The
  * "alwaysUseJndiLookup" flag just affects {@code name} references and
  * default names (inferred from the field name / property name).
+ * mapperName引用将始终在JNDI中解析,也允许全局JNDI名称.
+ * alwaysUseJndiLookup标记值影响名称引用和默认名称
  *
  * <p><b>NOTE:</b> A default CommonAnnotationBeanPostProcessor will be registered
  * by the "context:annotation-config" and "context:component-scan" XML tags.
@@ -133,6 +149,9 @@ import org.springframework.util.StringValueResolver;
  * <p><b>NOTE:</b> Annotation injection will be performed <i>before</i> XML injection; thus
  * the latter configuration will override the former for properties wired through
  * both approaches.
+ * 请注意:一个默认的CommonAnnotationBeanPostProcessor将通过"context:annotation-config" and "context:component-scan" xml标记被注册.
+ * 如果你想指定一个自定义的CommonAnnotationBeanPostProcessor bean定义,移除或关闭默认的注解配置.
+ * 请注意:注解注入将在XML注入之前执行,因为对于两种方式连接的属性,后一种方式将覆盖前者
  *
  * @author Juergen Hoeller
  * @since 2.5

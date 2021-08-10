@@ -265,6 +265,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 					logger.trace("Returning cached instance of singleton bean '" + beanName + "'");
 				}
 			}
+			//返回bean实例本身或从bean工厂中获取
 			bean = getObjectForBeanInstance(sharedInstance, name, beanName, null);
 		}
 
@@ -351,6 +352,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 				else if (mbd.isPrototype()) {
 					// It's a prototype -> create a new instance.
+					//如果是原型 -》 创建一个新实例
 					Object prototypeInstance = null;
 					try {
 						beforePrototypeCreation(beanName);
@@ -395,6 +397,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		}
 
 		// Check if required type matches the type of the actual bean instance.
+		//检查需要的类型是否匹配真正bean实例的类型
 		if (requiredType != null && !requiredType.isInstance(bean)) {
 			try {
 				T convertedBean = getTypeConverter().convertIfNecessary(bean, requiredType);
@@ -1142,7 +1145,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 	/**
 	 * Callback before prototype creation.
+	 * 原型创建前的回调
 	 * <p>The default implementation register the prototype as currently in creation.
+	 * 默认实现将原型注册为当前正在创建
 	 * @param beanName the name of the prototype about to be created
 	 * @see #isPrototypeCurrentlyInCreation
 	 */
@@ -1166,7 +1171,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 	/**
 	 * Callback after prototype creation.
+	 * 原型创建后的回调
 	 * <p>The default implementation marks the prototype as not in creation anymore.
+	 * 默认实现标记原型不在创建中
 	 * @param beanName the name of the prototype that has been created
 	 * @see #isPrototypeCurrentlyInCreation
 	 */

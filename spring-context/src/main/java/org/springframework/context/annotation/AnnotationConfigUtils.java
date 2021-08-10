@@ -133,6 +133,7 @@ public abstract class AnnotationConfigUtils {
 
 	/**
 	 * Register all relevant annotation post processors in the given registry.
+	 * 在给定的注册表中注册所有相关的后置处理
 	 * @param registry the registry to operate on
 	 */
 	public static void registerAnnotationConfigProcessors(BeanDefinitionRegistry registry) {
@@ -163,6 +164,7 @@ public abstract class AnnotationConfigUtils {
 
 		Set<BeanDefinitionHolder> beanDefs = new LinkedHashSet<>(8);
 
+		//ConfigurationClassPostProcessor 主要是处理配置类
 		if (!registry.containsBeanDefinition(CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(ConfigurationClassPostProcessor.class);
 			def.setSource(source);

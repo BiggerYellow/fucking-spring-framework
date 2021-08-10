@@ -20,21 +20,28 @@ import java.beans.PropertyDescriptor;
 
 /**
  * The central interface of Spring's low-level JavaBeans infrastructure.
+ * Spring的低级JavaBean 基础结构的中心接口
  *
  * <p>Typically not used directly but rather implicitly via a
  * {@link org.springframework.beans.factory.BeanFactory} or a
  * {@link org.springframework.validation.DataBinder}.
+ * 通常不直接使用，而是通过BeanFactory或DataBinder
  *
  * <p>Provides operations to analyze and manipulate standard JavaBeans:
  * the ability to get and set property values (individually or in bulk),
  * get property descriptors, and query the readability/writability of properties.
+ * 提供方法分析和操作标准的javaBean：
+ * 获取和设置属性值,获取属性描述和查询属性的读写能力
  *
  * <p>This interface supports <b>nested properties</b> enabling the setting
  * of properties on subproperties to an unlimited depth.
+ * 此接口支持嵌套属性,可以将子属性的属性设置为无限深度
  *
  * <p>A BeanWrapper's default for the "extractOldValueForEditor" setting
  * is "false", to avoid side effects caused by getter method invocations.
  * Turn this to "true" to expose present property values to custom editors.
+ * 一个BeanWrapper的默认extractOldValueForEditor属性为false, 来避免由于获取方法的调用的负面影响
+ * 设置为true 以向自定义编辑器公开当前属性
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

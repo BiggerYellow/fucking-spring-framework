@@ -24,6 +24,9 @@ package org.springframework.beans.factory;
  * initialization (e.g. from {@link ListableBeanFactory#getBeansOfType} calls).
  * In that sense, it is an alternative to {@link InitializingBean} which gets
  * triggered right at the end of a bean's local construction phase.
+ * 在BeanFactory引导期间单例预实例化阶段结束时触发的回调接口.
+ * 这个接口可以被单例bean实现 为了在常规单例初始化算法置换执行一些初始化,避免意外早期初始化的副作用.
+ * 在这个意义上来说,他是InitializingBean的替换品,他在bean的本地构造结束时被触发
  *
  * <p>This callback variant is somewhat similar to
  * {@link org.springframework.context.event.ContextRefreshedEvent} but doesn't
@@ -32,10 +35,13 @@ package org.springframework.beans.factory;
  * It also implies a more minimal dependency on just the {@code beans} package
  * and is being honored by standalone {@link ListableBeanFactory} implementations,
  * not just in an {@link org.springframework.context.ApplicationContext} environment.
+ * 这个回调变体类似于ContextRefreshedEvent但不需要实现ApplicationListener,也不需要跨上下文过滤上下文引用等级制度.
+ * 它还意味着对beans包的依赖性更小,并且受到独立的BeanFactory实现的支持,而不是仅仅是在ApplicationContext环境中
  *
  * <p><b>NOTE:</b> If you intend to start/manage asynchronous tasks, preferably
  * implement {@link org.springframework.context.Lifecycle} instead which offers
  * a richer model for runtime management and allows for phased startup/shutdown.
+ * 请注意:如果你打算启动或管理异步任务,最好实现Lifecycle代替他为运行时管理提供丰富的模型 并允许分阶段使用
  *
  * @author Juergen Hoeller
  * @since 4.1

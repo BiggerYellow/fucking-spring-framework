@@ -593,6 +593,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return the resolved autowire code,
+	 * 返回解析过的自动装配 码
 	 * (resolving AUTOWIRE_AUTODETECT to AUTOWIRE_CONSTRUCTOR or AUTOWIRE_BY_TYPE).
 	 * @see #AUTOWIRE_AUTODETECT
 	 * @see #AUTOWIRE_CONSTRUCTOR

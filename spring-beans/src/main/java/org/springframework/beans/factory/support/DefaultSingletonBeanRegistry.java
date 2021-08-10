@@ -79,13 +79,15 @@ import org.springframework.util.StringUtils;
 public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements SingletonBeanRegistry {
 
 	/** Cache of singleton objects: bean name to bean instance. */
-	//缓存的单例对象，bean名称为key，bean实例为value
+	//缓存的单例对象，bean名称为key，bean实例为value 一级缓存
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 
 	/** Cache of singleton factories: bean name to ObjectFactory. */
+	//缓存单例对象的工厂,key为bean名称 value为bean工厂 三级缓存
 	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
 
 	/** Cache of early singleton objects: bean name to bean instance. */
+	//缓存早期创建的单例对象 此时单例不是完全可用的 key为bean名称 value为bean实例 二级缓存
 	private final Map<String, Object> earlySingletonObjects = new HashMap<>(16);
 
 	/** Set of registered singletons, containing the bean names in registration order. */

@@ -30,16 +30,20 @@ import org.springframework.lang.Nullable;
  * interface to be implemented by bean factories that are capable of
  * autowiring, provided that they want to expose this functionality for
  * existing bean instances.
+ * BeanFactory接口的扩展,将由能够自动装配的bean工厂实现,前提是他们希望为现有bean实例公开此功能
  *
  * <p>This subinterface of BeanFactory is not meant to be used in normal
  * application code: stick to {@link org.springframework.beans.factory.BeanFactory}
  * or {@link org.springframework.beans.factory.ListableBeanFactory} for
  * typical use cases.
+ * Bean工厂的这个子接口不打算在正常的应用程序代码中使用:对于典型用例,坚持使用BeanFactory和ListableBeanFactory
  *
  * <p>Integration code for other frameworks can leverage this interface to
  * wire and populate existing bean instances that Spring does not control
  * the lifecycle of. This is particularly useful for WebWork Actions and
  * Tapestry Page objects, for example.
+ * 其他框架的集成代码可以利用此接口来连接和填充Sping无法控制其生命周期的现有bean实例。
+ * 例如：这对WebWork Actions和Tapestry Pages对象特别有用。
  *
  * <p>Note that this interface is not implemented by
  * {@link org.springframework.context.ApplicationContext} facades,
@@ -47,11 +51,15 @@ import org.springframework.lang.Nullable;
  * from an application context too, accessible through ApplicationContext's
  * {@link org.springframework.context.ApplicationContext#getAutowireCapableBeanFactory()}
  * method.
+ * 请注意 此接口不是由ApplicationContext门面实现的,因为他几乎从未被应用程序代码使用过.
+ * 这说明,他可以从应用程序上下文中获得,也可以通过ApplicationContext#getAutowireCapableBeanFactory()方法获得
  *
  * <p>You may also implement the {@link org.springframework.beans.factory.BeanFactoryAware}
  * interface, which exposes the internal BeanFactory even when running in an
  * ApplicationContext, to get access to an AutowireCapableBeanFactory:
  * simply cast the passed-in BeanFactory to AutowireCapableBeanFactory.
+ * 你也要实现BeanFactoryAware接口,他暴露内部bean工厂甚至在应用上下文中运行时,以获得访问AutowireCapaleBeanFactory:
+ * 简单的将输入的Bean工厂映射为AutowireCapableBeanFactory
  *
  * @author Juergen Hoeller
  * @since 04.12.2003
@@ -64,6 +72,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	/**
 	 * Constant that indicates no externally defined autowiring. Note that
 	 * BeanFactoryAware etc and annotation-driven injection will still be applied.
+	 * 表明没有外部定义的自动装配的常量.表明BeanFactoryAware和注解驱动的注入将仍然被应用
 	 * @see #createBean
 	 * @see #autowire
 	 * @see #autowireBeanProperties
@@ -73,6 +82,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	/**
 	 * Constant that indicates autowiring bean properties by name
 	 * (applying to all bean property setters).
+	 * 表明通过名称装配bean属性的常量 (应用于所有bean属性的set方法)
 	 * @see #createBean
 	 * @see #autowire
 	 * @see #autowireBeanProperties
@@ -82,6 +92,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	/**
 	 * Constant that indicates autowiring bean properties by type
 	 * (applying to all bean property setters).
+	 * 表明通过类型装配bean属性的常量(应用于所有bean属性的set方法)
 	 * @see #createBean
 	 * @see #autowire
 	 * @see #autowireBeanProperties
@@ -91,6 +102,7 @@ public interface AutowireCapableBeanFactory extends BeanFactory {
 	/**
 	 * Constant that indicates autowiring the greediest constructor that
 	 * can be satisfied (involves resolving the appropriate constructor).
+	 * 指示自动装配可以满足的最贪婪构造函数的常量(调用解析最适合的构造)
 	 * @see #createBean
 	 * @see #autowire
 	 */

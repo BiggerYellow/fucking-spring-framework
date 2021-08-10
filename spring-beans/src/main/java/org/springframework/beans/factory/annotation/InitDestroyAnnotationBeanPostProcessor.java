@@ -53,23 +53,31 @@ import org.springframework.util.ReflectionUtils;
  * that invokes annotated init and destroy methods. Allows for an annotation
  * alternative to Spring's {@link org.springframework.beans.factory.InitializingBean}
  * and {@link org.springframework.beans.factory.DisposableBean} callback interfaces.
+ * 调用注解的初始化和销毁方法的后置处理器的实现类.
+ * 允许替代Spring的InitializingBean和DisposableBean回调接口的注解
  *
  * <p>The actual annotation types that this post-processor checks for can be
  * configured through the {@link #setInitAnnotationType "initAnnotationType"}
  * and {@link #setDestroyAnnotationType "destroyAnnotationType"} properties.
  * Any custom annotation can be used, since there are no required annotation
  * attributes.
+ * 后置处理器检查的实际注解类型可以通过 initAnnotationType和destroyAnnotationType属性进行配置.
+ * 可以使用任何自定义注解,因为他们没有必须的注解属性
  *
  * <p>Init and destroy annotations may be applied to methods of any visibility:
  * public, package-protected, protected, or private. Multiple such methods
  * may be annotated, but it is recommended to only annotate one single
  * init method and destroy method, respectively.
+ * 初始化和销毁注解可以应用于任何可见的方法:公共的、默认的、保护的、私有的.
+ * 多个这样的方法可能被注解,但是推荐只分别注解一个简单的初始化方法和销毁方法
  *
  * <p>Spring's {@link org.springframework.context.annotation.CommonAnnotationBeanPostProcessor}
  * supports the JSR-250 {@link javax.annotation.PostConstruct} and {@link javax.annotation.PreDestroy}
  * annotations out of the box, as init annotation and destroy annotation, respectively.
  * Furthermore, it also supports the {@link javax.annotation.Resource} annotation
  * for annotation-driven injection of named beans.
+ * Spring的CommonAnnotationBeanPostProcessor 支持JSR-250的开箱即用的PostConstruct和PreDestroy注解,作为初始化注解和销毁注解.
+ * 此外,他还支持Resource注释用于命名bean的注解驱动注入
  *
  * @author Juergen Hoeller
  * @since 2.5

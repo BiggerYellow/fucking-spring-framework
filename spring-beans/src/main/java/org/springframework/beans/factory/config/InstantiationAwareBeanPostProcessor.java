@@ -26,17 +26,21 @@ import org.springframework.lang.Nullable;
  * Subinterface of {@link BeanPostProcessor} that adds a before-instantiation callback,
  * and a callback after instantiation but before explicit properties are set or
  * autowiring occurs.
+ * BeanPostProcessor的子接口,他添加一个实例化之前的回调和一个实例化之后但是在显示设置属性或自动装配发生之前的回调
  *
  * <p>Typically used to suppress default instantiation for specific target beans,
  * for example to create proxies with special TargetSources (pooling targets,
  * lazily initializing targets, etc), or to implement additional injection strategies
  * such as field injection.
+ * 通常用于抑制特定目标bean的默认实例化,例如创建具有特殊目标资源的代理,或实现额外的注入策略 例如字段注入
  *
  * <p><b>NOTE:</b> This interface is a special purpose interface, mainly for
  * internal use within the framework. It is recommended to implement the plain
  * {@link BeanPostProcessor} interface as far as possible, or to derive from
  * {@link InstantiationAwareBeanPostProcessorAdapter} in order to be shielded
  * from extensions to this interface.
+ * 请注意: 这是一个特殊用途的接口,主要在框架内部使用.
+ * 推荐尽可能实现普通的BeanPostProcessor接口 或 派生于InstantiationAwareBeanPostProcessorAdapter 以便屏蔽此接口扩展
  *
  * @author Juergen Hoeller
  * @author Rod Johnson
@@ -78,9 +82,12 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	/**
 	 * Perform operations after the bean has been instantiated, via a constructor or factory method,
 	 * but before Spring property population (from explicit properties or autowiring) occurs.
+	 * 通过一个构造或工厂方法,执行在bean实例化后的操作,但是在Spring属性填充(从显式属性或自动装配)之前发生。
 	 * <p>This is the ideal callback for performing custom field injection on the given bean
 	 * instance, right before Spring's autowiring kicks in.
+	 * 这是在Spring的自动装配开始之前对给定bean实例执行自定义字段注入的理想回调
 	 * <p>The default implementation returns {@code true}.
+	 * 默认实现返回true
 	 * @param bean the bean instance created, with properties not having been set yet
 	 * @param beanName the name of the bean
 	 * @return {@code true} if properties should be set on the bean; {@code false}

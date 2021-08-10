@@ -92,6 +92,7 @@ public class AnnotatedBeanDefinitionReader {
 		Assert.notNull(environment, "Environment must not be null");
 		this.registry = registry;
 		this.conditionEvaluator = new ConditionEvaluator(registry, environment, null);
+		//这里最重要的注册了多个后置处理器 例如org.springframework.context.annotation.internalConfigurationAnnotationProcessor 来处理配置类 并且注册为bean
 		AnnotationConfigUtils.registerAnnotationConfigProcessors(this.registry);
 	}
 

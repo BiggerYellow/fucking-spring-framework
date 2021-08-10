@@ -51,8 +51,10 @@ import org.springframework.util.CollectionUtils;
 
 /**
  * Registers {@link EventListener} methods as individual {@link ApplicationListener} instances.
+ * 注册EventListener方法作为单独的ApplicationListener实例
  * Implements {@link BeanFactoryPostProcessor} (as of 5.1) primarily for early retrieval,
  * avoiding AOP checks for this processor bean and its {@link EventListenerFactory} delegates.
+ * 实现BeanPostProcessor主要用于早期检索,避免对其处理器bean和他的EventListenerFactory委托进行aop检查
  *
  * @author Stephane Nicoll
  * @author Juergen Hoeller

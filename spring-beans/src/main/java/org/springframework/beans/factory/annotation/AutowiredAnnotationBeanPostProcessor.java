@@ -74,11 +74,15 @@ import org.springframework.util.StringUtils;
  * config methods. Such members to be injected are detected through annotations:
  * by default, Spring's {@link Autowired @Autowired} and {@link Value @Value}
  * annotations.
+ * BeanPostProcessor的实现类,自动装配带注解的字段、setter方法和任意配置方法的实现。
+ * 通过注解检测这些要注入的对象：默认情况下,Spring的@Autowired和@Value注解
  *
  * <p>Also supports JSR-330's {@link javax.inject.Inject @Inject} annotation,
  * if available, as a direct alternative to Spring's own {@code @Autowired}.
+ * 同样支持@Inject注解,如果可用,作为spring自己的@Autowired的直接替代方案
  *
  * <h3>Autowired Constructors</h3>
+ * 自动装配的构造函数
  * <p>Only one constructor of any given bean class may declare this annotation with
  * the 'required' attribute set to {@code true}, indicating <i>the</i> constructor
  * to autowire when used as a Spring bean. Furthermore, if the 'required' attribute
@@ -90,33 +94,52 @@ import org.springframework.util.StringUtils;
  * then a primary/default constructor (if present) will be used. If a class only
  * declares a single constructor to begin with, it will always be used, even if not
  * annotated. An annotated constructor does not have to be public.
+ * 任何给定bean类的只有一个构造函数可以声明此注释,并将required属性设置为true,指示构造函数在用做spring bean时自动装配.
+ * 此外,如果required 属性设置为true, 则只能使用@Autowired注解单个构造函数。
+ * 如果多个non-required构造函数声明了注解,他们将被视为自动装配的候选者.
+ * 将选择通过匹配Spring容器中的bean可以满足的依赖项数量最多的构造函数
+ * 如果没有候选者满足,然后将使用一个主要或默认的构造(如果存在的话)
+ * 如果一个类只声明一个构造函数开始,它将始终被使用,即使没有注释
+ * 带注解的构造函数不必是公共的
  *
  * <h3>Autowired Fields</h3>
+ * 自动装配的字段
  * <p>Fields are injected right after construction of a bean, before any
  * config methods are invoked. Such a config field does not have to be public.
+ * 在bean被构造之后字段被正确注入,在任何篇日志方法被调用之前. 这样一个配置字段不需要是公共的
  *
  * <h3>Autowired Methods</h3>
+ * 自动装配方法
  * <p>Config methods may have an arbitrary name and any number of arguments; each of
  * those arguments will be autowired with a matching bean in the Spring container.
  * Bean property setter methods are effectively just a special case of such a
  * general config method. Config methods do not have to be public.
+ * 配置方法可以有任意的名称和任意数量的参数;在Spring容器中 每个这些参数都将被自动注入一个匹配的bean.
+ * Bean属性的setter方法实际上只是这种通用配置方法的特例.配置方法不必是公共的
  *
  * <h3>Annotation Config vs. XML Config</h3>
+ * 注解配置 vs xml配置
  * <p>A default {@code AutowiredAnnotationBeanPostProcessor} will be registered
  * by the "context:annotation-config" and "context:component-scan" XML tags.
  * Remove or turn off the default annotation configuration there if you intend
  * to specify a custom {@code AutowiredAnnotationBeanPostProcessor} bean definition.
+ * 一个默认的AutowiredAnnotationBeanPostProcessor将被注册通过context:annotation-config 和 context:componect-scan 标记
+ * 如果你想要指定一个自定义的AutowiredAnnotationBeanPostProcessor bean定义 移除或关闭默认的注解配置
  *
  * <p><b>NOTE:</b> Annotation injection will be performed <i>before</i> XML injection;
  * thus the latter configuration will override the former for properties wired through
  * both approaches.
+ * 注意：注解注入将在XML注入之前执行;因此通过两者方法连接的属性,后一种配置将覆盖前者
  *
  * <h3>{@literal @}Lookup Methods</h3>
+ * 查找方法
  * <p>In addition to regular injection points as discussed above, this post-processor
  * also handles Spring's {@link Lookup @Lookup} annotation which identifies lookup
  * methods to be replaced by the container at runtime. This is essentially a type-safe
  * version of {@code getBean(Class, args)} and {@code getBean(String, args)}.
  * See {@link Lookup @Lookup's javadoc} for details.
+ * 除了上面讨论的常规注入点之外,这个后置处理器还处理Spring的@LookUp注解,该注解在运行时由容器替换要查找的方法
+ * 这本质上是getBean(Class, args)} and {@code getBean(String, args)的安全版本
  *
  * @author Juergen Hoeller
  * @author Mark Fisher
