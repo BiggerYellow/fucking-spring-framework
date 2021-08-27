@@ -29,9 +29,11 @@ import org.springframework.cglib.core.internal.LoadingCache;
 
 /**
  * Abstract class for all code-generating CGLIB utilities.
+ * 所有代码生成CGLIB抽实用程序的抽象类
  * In addition to caching generated classes for performance, it provides hooks for
  * customizing the <code>ClassLoader</code>, name of the generated class, and transformations
  * applied before generation.
+ * 除了缓存生成的类以提高性能, 他提供自定义类加载器的钩子,生成类的名称以及在生成类之前的应用的装换
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 abstract public class AbstractClassGenerator<T> implements ClassGenerator {
@@ -245,6 +247,8 @@ abstract public class AbstractClassGenerator<T> implements ClassGenerator {
 	/**
 	 * Set the strategy to use to create the bytecode from this generator.
 	 * By default an instance of {@link DefaultGeneratorStrategy} is used.
+	 * 设置用于从生成器中创建字节的策略.
+	 * 默认使用DefaultGeneratorStrategy
 	 */
 	public void setStrategy(GeneratorStrategy strategy) {
 		if (strategy == null)

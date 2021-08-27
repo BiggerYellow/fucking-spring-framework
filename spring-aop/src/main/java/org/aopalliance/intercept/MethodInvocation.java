@@ -21,9 +21,11 @@ import java.lang.reflect.Method;
 /**
  * Description of an invocation to a method, given to an interceptor
  * upon method-call.
+ * 方法调用的描述, 在方法调用上提供给拦截器
  *
  * <p>A method invocation is a joinpoint and can be intercepted by a
  * method interceptor.
+ * 方法调用 是一个切点 且 可以通过一个方法拦截器拦截
  *
  * @author Rod Johnson
  * @see MethodInterceptor

@@ -18,12 +18,14 @@ package org.springframework.aop;
 
 /**
  * Superinterface for advisors that perform one or more AOP <b>introductions</b>.
- *
+ * 执行一个或多个AOP introductions的 advistor的超级接口
  * <p>This interface cannot be implemented directly; subinterfaces must
  * provide the advice type implementing the introduction.
+ * 这个接口不能直接被继承;子接口必须提供实现introduction的通知类型
  *
  * <p>Introduction is the implementation of additional interfaces
  * (not implemented by a target) via AOP advice.
+ * introduction 是通过AOP通知实现附加接口
  *
  * @author Rod Johnson
  * @since 04.04.2003

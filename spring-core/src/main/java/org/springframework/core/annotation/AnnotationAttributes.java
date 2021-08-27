@@ -31,10 +31,12 @@ import org.springframework.util.StringUtils;
  * <em>key-value</em> pairs as read by {@link AnnotationUtils},
  * {@link AnnotatedElementUtils}, and Spring's reflection- and ASM-based
  * {@link org.springframework.core.type.AnnotationMetadata} implementations.
+ * LinkedHashMap子类,表示AnnotationUtils、AnnotatedElementUtils和spring反射和基于ASM的实现 读取的注解属性对实现
  *
  * <p>Provides 'pseudo-reification' to avoid noisy Map generics in the calling
  * code as well as convenience methods for looking up annotation attributes
  * in a type-safe fashion.
+ * 提供 伪具体化 以避免调用代码中出现的嘈杂的map泛型, 以及以类型安全的方式查找注解属性的便捷方法
  *
  * @author Chris Beams
  * @author Sam Brannen
@@ -413,10 +415,13 @@ public class AnnotationAttributes extends LinkedHashMap<String, Object> {
 
 	/**
 	 * Return an {@link AnnotationAttributes} instance based on the given map.
+	 * 基于给定的map返回一个AnnotationAttrubutes实例
 	 * <p>If the map is already an {@code AnnotationAttributes} instance, it
 	 * will be cast and returned immediately without creating a new instance.
+	 * 如果map已经是一个 AnnotationAttribute 实例,他将被立即转换和并返回,而无需创建新实例。
 	 * Otherwise a new instance will be created by passing the supplied map
 	 * to the {@link #AnnotationAttributes(Map)} constructor.
+	 * 否则,将通过将提供的映射传递给构造函数来创建一个实例
 	 * @param map original source of annotation attribute <em>key-value</em> pairs
 	 */
 	@Nullable

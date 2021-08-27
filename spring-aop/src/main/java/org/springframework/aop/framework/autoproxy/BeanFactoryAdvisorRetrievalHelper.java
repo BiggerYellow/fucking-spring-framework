@@ -33,6 +33,7 @@ import org.springframework.util.Assert;
 /**
  * Helper for retrieving standard Spring Advisors from a BeanFactory,
  * for use with auto-proxying.
+ * 从bean工厂中检测标准的Spring Advisors的帮助类, 为了使用自动代理
  *
  * @author Juergen Hoeller
  * @since 2.0.2
@@ -61,23 +62,30 @@ public class BeanFactoryAdvisorRetrievalHelper {
 	/**
 	 * Find all eligible Advisor beans in the current bean factory,
 	 * ignoring FactoryBeans and excluding beans that are currently in creation.
+	 * 找到所有合适的bean在当前bean工厂中, 忽略工厂bean和已经在创建中的bean
 	 * @return the list of {@link org.springframework.aop.Advisor} beans
 	 * @see #isEligibleBean
 	 */
 	public List<Advisor> findAdvisorBeans() {
 		// Determine list of advisor bean names, if not cached already.
+		//确定advisor bean的名称列表, 如果尚未缓存
+		//这里主要处理的就是 internalTransactionAdvisor 用于事务处理的通知
 		String[] advisorNames = this.cachedAdvisorBeanNames;
 		if (advisorNames == null) {
 			// Do not initialize FactoryBeans here: We need to leave all regular beans
 			// uninitialized to let the auto-proxy creator apply to them!
+			//这里不要实例化工厂bean: 我们需要让所有常规bean不实例化 以便让 自动代理创建器应用他们
+			//获取Advisor类型的所有bean名称,包括定义在祖先工厂中的
 			advisorNames = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(
 					this.beanFactory, Advisor.class, true, false);
 			this.cachedAdvisorBeanNames = advisorNames;
 		}
+		//如果不存在该通知类名称 直接返回空集合
 		if (advisorNames.length == 0) {
 			return new ArrayList<>();
 		}
 
+		//存在指定bean名称  如果当前bean名称在创建中的话 直接跳过   不在的话则直接获取该bean
 		List<Advisor> advisors = new ArrayList<>();
 		for (String name : advisorNames) {
 			if (isEligibleBean(name)) {

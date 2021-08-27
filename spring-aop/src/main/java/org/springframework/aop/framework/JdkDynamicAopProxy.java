@@ -38,20 +38,26 @@ import org.springframework.util.ClassUtils;
 /**
  * JDK-based {@link AopProxy} implementation for the Spring AOP framework,
  * based on JDK {@link java.lang.reflect.Proxy dynamic proxies}.
+ * Spring AOP框架的基于JDK的代理实现, 基于JDK反射代理
  *
  * <p>Creates a dynamic proxy, implementing the interfaces exposed by
  * the AopProxy. Dynamic proxies <i>cannot</i> be used to proxy methods
  * defined in classes, rather than interfaces.
+ * 创建动态代理, 实现AOP代理暴露的接口. 动态代理不能用于代理在类中定义的方法,而不是接口
  *
  * <p>Objects of this type should be obtained through proxy factories,
  * configured by an {@link AdvisedSupport} class. This class is internal
  * to Spring's AOP framework and need not be used directly by client code.
+ * 这种类型的对象应该从代理工厂中获得, 通过AdvisedSupport类配置.
+ * 这个类是SpringAOP框架内部的 且 不需要客户端直接使用
  *
  * <p>Proxies created using this class will be thread-safe if the
  * underlying (target) class is thread-safe.
+ * 如果潜在的目标类是线程安全的, 使用它创建的代理类也是线程安全的
  *
  * <p>Proxies are serializable so long as all Advisors (including Advices
  * and Pointcuts) and the TargetSource are serializable.
+ * 代理是可序列化的 同样 通知者包括通知和切点 和 目标资源都是可序列化的
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

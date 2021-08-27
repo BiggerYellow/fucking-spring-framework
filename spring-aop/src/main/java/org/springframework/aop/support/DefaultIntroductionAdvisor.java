@@ -34,6 +34,7 @@ import org.springframework.util.ClassUtils;
 /**
  * Simple {@link org.springframework.aop.IntroductionAdvisor} implementation
  * that by default applies to any class.
+ * 简单的 IntroductionAdvisor实现, 默认情况下适用于所有类.
  *
  * @author Rod Johnson
  * @author Juergen Hoeller

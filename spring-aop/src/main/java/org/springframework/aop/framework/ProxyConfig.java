@@ -23,6 +23,7 @@ import org.springframework.util.Assert;
 /**
  * Convenience superclass for configuration used in creating proxies,
  * to ensure that all proxy creators have consistent properties.
+ * 用于创建代理的配置的便捷超类,保证所有代理创建器拥有一致的属性
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
@@ -48,13 +49,17 @@ public class ProxyConfig implements Serializable {
 	/**
 	 * Set whether to proxy the target class directly, instead of just proxying
 	 * specific interfaces. Default is "false".
+	 * 设置是否直接代理目标类, 代替值代理指定的接口. 默认为 false
 	 * <p>Set this to "true" to force proxying for the TargetSource's exposed
 	 * target class. If that target class is an interface, a JDK proxy will be
 	 * created for the given interface. If that target class is any other class,
 	 * a CGLIB proxy will be created for the given class.
+	 * 设置他为true, 来强制代理TargetSource的公开目标类.如果目标类是一个接口, 会为给定的接口创建一个JDK代理.
+	 * 如果目标是其他类, 会为给定该类创建一个CGLIB代理
 	 * <p>Note: Depending on the configuration of the concrete proxy factory,
 	 * the proxy-target-class behavior will also be applied if no interfaces
 	 * have been specified (and no interface autodetection is activated).
+	 * 注意: 依赖于具有代理工厂的配置, 如果没有指定接口, 代理目标类行为将被应用
 	 * @see org.springframework.aop.TargetSource#getTargetClass()
 	 */
 	public void setProxyTargetClass(boolean proxyTargetClass) {
@@ -63,6 +68,7 @@ public class ProxyConfig implements Serializable {
 
 	/**
 	 * Return whether to proxy the target class directly as well as any interfaces.
+	 * 返回是否直接代理目标类以及任何接口
 	 */
 	public boolean isProxyTargetClass() {
 		return this.proxyTargetClass;
@@ -85,6 +91,7 @@ public class ProxyConfig implements Serializable {
 
 	/**
 	 * Return whether proxies should perform aggressive optimizations.
+	 * 返回代理是否应该执行积极的优化
 	 */
 	public boolean isOptimize() {
 		return this.optimize;
@@ -103,6 +110,7 @@ public class ProxyConfig implements Serializable {
 	/**
 	 * Return whether proxies created by this configuration should be
 	 * prevented from being cast to {@link Advised}.
+	 * 返回通过此配置生成的代理是否应该禁止被映射为Advised
 	 */
 	public boolean isOpaque() {
 		return this.opaque;
@@ -124,6 +132,7 @@ public class ProxyConfig implements Serializable {
 	/**
 	 * Return whether the AOP proxy will expose the AOP proxy for
 	 * each invocation.
+	 * 返回AOP代理是否为每一个调用暴露AOP代理
 	 */
 	public boolean isExposeProxy() {
 		return this.exposeProxy;
@@ -141,6 +150,7 @@ public class ProxyConfig implements Serializable {
 
 	/**
 	 * Return whether the config is frozen, and no advice changes can be made.
+	 * 返回配置是否已经冻结 且 不能进行任何通知更改
 	 */
 	public boolean isFrozen() {
 		return this.frozen;

@@ -30,6 +30,8 @@ import org.springframework.util.ReflectionUtils;
 /**
  * Objenesis-based extension of {@link CglibAopProxy} to create proxy instances
  * without invoking the constructor of the class. Used by default as of Spring 4.
+ * 基于Objenesis的CglibAopProxy的扩展, 以 不调用类的构造方法来 创建代理实例.
+ * 从Spring4开始默认使用
  *
  * @author Oliver Gierke
  * @author Juergen Hoeller
@@ -54,11 +56,13 @@ class ObjenesisCglibAopProxy extends CglibAopProxy {
 
 	@Override
 	protected Object createProxyClassAndInstance(Enhancer enhancer, Callback[] callbacks) {
+		//创建增强类
 		Class<?> proxyClass = enhancer.createClass();
 		Object proxyInstance = null;
 
 		if (objenesis.isWorthTrying()) {
 			try {
+				//通过增强类创建代理实例
 				proxyInstance = objenesis.newInstance(proxyClass, enhancer.getUseCache());
 			}
 			catch (Throwable ex) {
@@ -83,6 +87,7 @@ class ObjenesisCglibAopProxy extends CglibAopProxy {
 			}
 		}
 
+		//设置回调
 		((Factory) proxyInstance).setCallbacks(callbacks);
 		return proxyInstance;
 	}

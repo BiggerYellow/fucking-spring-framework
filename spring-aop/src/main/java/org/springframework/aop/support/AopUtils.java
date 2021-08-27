@@ -182,9 +182,12 @@ public abstract class AopUtils {
 	 * is one. E.g. the method may be {@code IFoo.bar()} and the target class
 	 * may be {@code DefaultFoo}. In this case, the method may be
 	 * {@code DefaultFoo.bar()}. This enables attributes on that method to be found.
+	 * 给定一个可能来自接口的方法,以及当前AOP调用中使用的目标类, 如果有的话 找到对应的目标方法.
+	 * 例如 方法可能是 IFoo.bar() 且 目标类可能是 DefaultFoo.  在这种情况下, 方法可能是 DefaultFoo.bar(). 这使得可以找到该方法上的属性.
 	 * <p><b>NOTE:</b> In contrast to {@link org.springframework.util.ClassUtils#getMostSpecificMethod},
 	 * this method resolves Java 5 bridge methods in order to retrieve attributes
 	 * from the <i>original</i> method definition.
+	 * 注意: 与getMostSpecificMethod相比, 此方法解析java 5 桥接方法, 以便从原始方法定义中检索属性
 	 * @param method the method to be invoked, which may come from an interface
 	 * @param targetClass the target class for the current invocation.
 	 * May be {@code null} or may not even implement the method.
@@ -194,8 +197,10 @@ public abstract class AopUtils {
 	 */
 	public static Method getMostSpecificMethod(Method method, @Nullable Class<?> targetClass) {
 		Class<?> specificTargetClass = (targetClass != null ? ClassUtils.getUserClass(targetClass) : null);
+		//找到对应的目标源方法
 		Method resolvedMethod = ClassUtils.getMostSpecificMethod(method, specificTargetClass);
 		// If we are dealing with method with generic parameters, find the original method.
+		// 如果我们正在处理 带有泛型参数的方法, 请找到原始方法
 		return BridgeMethodResolver.findBridgedMethod(resolvedMethod);
 	}
 
@@ -213,23 +218,28 @@ public abstract class AopUtils {
 
 	/**
 	 * Can the given pointcut apply at all on the given class?
+	 * 在给定的类 给定的切点是否可以应用于所有
 	 * <p>This is an important test as it can be used to optimize
 	 * out a pointcut for a class.
+	 * 这是一个重要的测试,因为他可用于优化类的切点
 	 * @param pc the static or dynamic pointcut to check
 	 * @param targetClass the class to test
 	 * @param hasIntroductions whether or not the advisor chain
-	 * for this bean includes any introductions
+	 * for this bean includes any introductions 这个bean的通知者调用链是否包含任何 介绍
 	 * @return whether the pointcut can apply on any method
 	 */
 	public static boolean canApply(Pointcut pc, Class<?> targetClass, boolean hasIntroductions) {
 		Assert.notNull(pc, "Pointcut must not be null");
+		//获取当前的切点的类过滤器,查看是否匹配当前类  不匹配直接返回false
 		if (!pc.getClassFilter().matches(targetClass)) {
 			return false;
 		}
 
+		//获取切点的方法匹配器
 		MethodMatcher methodMatcher = pc.getMethodMatcher();
 		if (methodMatcher == MethodMatcher.TRUE) {
 			// No need to iterate the methods if we're matching any method anyway...
+			//如果我们匹配任何方法,没必要遍历所有的方法
 			return true;
 		}
 
@@ -239,16 +249,24 @@ public abstract class AopUtils {
 		}
 
 		Set<Class<?>> classes = new LinkedHashSet<>();
+
+		//判断当前类扩展了代理类Proxy  没有的话获取原类
 		if (!Proxy.isProxyClass(targetClass)) {
 			classes.add(ClassUtils.getUserClass(targetClass));
 		}
+		//添加当前类的所有接口到classes中
 		classes.addAll(ClassUtils.getAllInterfacesForClassAsSet(targetClass));
 
+		//匹配所有类中的所有方法 是否有可以应用这个methodMatcher的
 		for (Class<?> clazz : classes) {
 			Method[] methods = ReflectionUtils.getAllDeclaredMethods(clazz);
 			for (Method method : methods) {
+				//如果存在introductionAwareMethodMatcher 则执行introductionAwareMethodMatcher的matches方法
+				//否则就执行当前切点的方法匹配器
 				if (introductionAwareMethodMatcher != null ?
+						//这里主要执行AspectJExpressionPointcut的matches方法
 						introductionAwareMethodMatcher.matches(method, targetClass, hasIntroductions) :
+						//主要执行 TransactionAttributeSourcePointcut 自定义的切点方法匹配器
 						methodMatcher.matches(method, targetClass)) {
 					return true;
 				}
@@ -272,15 +290,21 @@ public abstract class AopUtils {
 
 	/**
 	 * Can the given advisor apply at all on the given class?
+	 * 给定的advisor 是否可以应用到所有 在给定的类中
 	 * <p>This is an important test as it can be used to optimize out a advisor for a class.
+	 * 这是一个重要的测试, 因为他可以从来优化一个类的advisor
 	 * This version also takes into account introductions (for IntroductionAwareMethodMatchers).
+	 * 这个版本也考虑介绍
 	 * @param advisor the advisor to check
 	 * @param targetClass class we're testing
 	 * @param hasIntroductions whether or not the advisor chain for this bean includes
-	 * any introductions
+	 * any introductions 此bean的通知者调用链是否包含任何介绍
 	 * @return whether the pointcut can apply on any method
 	 */
 	public static boolean canApply(Advisor advisor, Class<?> targetClass, boolean hasIntroductions) {
+		//1.如果通知者类 属于 IntroductionAdvisor  则 取当前通知者的类过滤器 查看 目标类是否匹配
+		//2.如果通知类属于 PointCutAdvisor 则 继续调用 canApply方法 查看是否可以应用该类
+		//3.如果以上两者都不属于直接返回true
 		if (advisor instanceof IntroductionAdvisor) {
 			return ((IntroductionAdvisor) advisor).getClassFilter().matches(targetClass);
 		}
@@ -290,6 +314,7 @@ public abstract class AopUtils {
 		}
 		else {
 			// It doesn't have a pointcut so we assume it applies.
+			// 没有切点的话 我们假设他可以应用
 			return true;
 		}
 	}
@@ -297,15 +322,19 @@ public abstract class AopUtils {
 	/**
 	 * Determine the sublist of the {@code candidateAdvisors} list
 	 * that is applicable to the given class.
+	 * 确定适用于给定类的candidateAdvisors的子集
 	 * @param candidateAdvisors the Advisors to evaluate
 	 * @param clazz the target class
 	 * @return sublist of Advisors that can apply to an object of the given class
 	 * (may be the incoming List as-is)
 	 */
 	public static List<Advisor> findAdvisorsThatCanApply(List<Advisor> candidateAdvisors, Class<?> clazz) {
+		//如果候选通知者为空  直接返回
 		if (candidateAdvisors.isEmpty()) {
 			return candidateAdvisors;
 		}
+		//首先 找到属于IntroductionAdvisor 且 该候选通知者可以应用到这个类 添加到 eligibleAdvisors
+		//接下来 处理剩下来的候选通知者 判断是否可以应用到该类
 		List<Advisor> eligibleAdvisors = new ArrayList<>();
 		for (Advisor candidate : candidateAdvisors) {
 			if (candidate instanceof IntroductionAdvisor && canApply(candidate, clazz)) {
@@ -316,8 +345,10 @@ public abstract class AopUtils {
 		for (Advisor candidate : candidateAdvisors) {
 			if (candidate instanceof IntroductionAdvisor) {
 				// already processed
+				// IntroductionAdvisor解析过的直接跳过
 				continue;
 			}
+			//当前候选者切点中的方法匹配器是否可以匹配 给定类的中任意方法 匹配则加入候选者列表中
 			if (canApply(candidate, clazz, hasIntroductions)) {
 				eligibleAdvisors.add(candidate);
 			}

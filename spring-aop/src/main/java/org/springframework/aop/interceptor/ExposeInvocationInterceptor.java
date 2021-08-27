@@ -63,6 +63,7 @@ public final class ExposeInvocationInterceptor implements MethodInterceptor, Pri
 
 	/**
 	 * Return the AOP Alliance MethodInvocation object associated with the current invocation.
+	 * 返回与 当前调用相关联的 AOP Alliance MethodInvocation 对象
 	 * @return the invocation object associated with the current invocation
 	 * @throws IllegalStateException if there is no AOP invocation in progress,
 	 * or if the ExposeInvocationInterceptor was not added to this interceptor chain

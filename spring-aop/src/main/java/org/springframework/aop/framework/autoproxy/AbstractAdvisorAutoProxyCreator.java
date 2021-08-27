@@ -30,17 +30,22 @@ import org.springframework.util.Assert;
 /**
  * Generic auto proxy creator that builds AOP proxies for specific beans
  * based on detected Advisors for each bean.
+ * 通用的自动代理创建器 根据检测到的每个bean的Advistors为特定的bean构建aop代理
  *
  * <p>Subclasses may override the {@link #findCandidateAdvisors()} method to
  * return a custom list of Advisors applying to any object. Subclasses can
  * also override the inherited {@link #shouldSkip} method to exclude certain
  * objects from auto-proxying.
+ * 子类可以覆盖findCandidateAdvisors方法来返回适用于任何对象的自定义Advisors列表.
+ * 子类也可以覆盖内部shouldSkip方法来排除自动代理中确定的对象
  *
  * <p>Advisors or advices requiring ordering should implement the
  * {@link org.springframework.core.Ordered} interface. This class sorts
  * Advisors by Ordered order value. Advisors that don't implement the
  * Ordered interface will be considered as unordered; they will appear
  * at the end of the advisor chain in undefined order.
+ * Advisors或advices需要排序应该实现Ordered接口. 这个类根据Ordered的值来排序Advistor.
+ * Advistor没有实现Ordered接口将被认为是无序的,他们将出现在advistor链表的尾部 以未定义的顺序
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
@@ -74,6 +79,7 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 			Class<?> beanClass, String beanName, @Nullable TargetSource targetSource) {
 
 		List<Advisor> advisors = findEligibleAdvisors(beanClass, beanName);
+		//如果没有合格的通知者 直接返回空数组 否则返回通知者的数组
 		if (advisors.isEmpty()) {
 			return DO_NOT_PROXY;
 		}
@@ -82,6 +88,7 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 
 	/**
 	 * Find all eligible Advisors for auto-proxying this class.
+	 * 为自动代理这个类找到所有合格的advisors
 	 * @param beanClass the clazz to find advisors for
 	 * @param beanName the name of the currently proxied bean
 	 * @return the empty List, not {@code null},
@@ -91,9 +98,12 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 	 * @see #extendAdvisors
 	 */
 	protected List<Advisor> findEligibleAdvisors(Class<?> beanClass, String beanName) {
+		//获取所有候选的Advisor
 		List<Advisor> candidateAdvisors = findCandidateAdvisors();
+		//获取所有可以应用到这个类上的Advisor
 		List<Advisor> eligibleAdvisors = findAdvisorsThatCanApply(candidateAdvisors, beanClass, beanName);
 		extendAdvisors(eligibleAdvisors);
+		//如果合格的通知者不为空 则进行排序
 		if (!eligibleAdvisors.isEmpty()) {
 			eligibleAdvisors = sortAdvisors(eligibleAdvisors);
 		}
@@ -102,6 +112,7 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 
 	/**
 	 * Find all candidate Advisors to use in auto-proxying.
+	 * 找到所有的候选者advisors以用于自动代理
 	 * @return the List of candidate Advisors
 	 */
 	protected List<Advisor> findCandidateAdvisors() {
@@ -112,6 +123,7 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 	/**
 	 * Search the given candidate Advisors to find all Advisors that
 	 * can apply to the specified bean.
+	 * 搜索所有给定的候选Advisors 来找到可以应用到特殊bean的所有Advisors
 	 * @param candidateAdvisors the candidate Advisors
 	 * @param beanClass the target's bean class
 	 * @param beanName the target's bean name
@@ -143,6 +155,7 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 	/**
 	 * Sort advisors based on ordering. Subclasses may choose to override this
 	 * method to customize the sorting strategy.
+	 * 根据order进行排序通知者.  子类可以选择覆盖这个方法 来自定义排序策略
 	 * @param advisors the source List of Advisors
 	 * @return the sorted List of Advisors
 	 * @see org.springframework.core.Ordered
@@ -157,9 +170,12 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 	/**
 	 * Extension hook that subclasses can override to register additional Advisors,
 	 * given the sorted Advisors obtained to date.
+	 * 子类可以覆盖以来注册额外的 通知者的扩展钩子, 考虑到迄今为止获得的已排序顾问
 	 * <p>The default implementation is empty.
+	 * 默认实现为空
 	 * <p>Typically used to add Advisors that expose contextual information
 	 * required by some of the later advisors.
+	 * 通常用于添加通知者, 为公开一些后期通知者所需要的上下文信息
 	 * @param candidateAdvisors the Advisors that have already been identified as
 	 * applying to a given bean
 	 */

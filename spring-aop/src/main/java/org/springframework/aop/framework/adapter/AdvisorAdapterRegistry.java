@@ -32,7 +32,9 @@ public interface AdvisorAdapterRegistry {
 
 	/**
 	 * Return an {@link Advisor} wrapping the given advice.
+	 * 返回一个包裹给定通知的 通知者
 	 * <p>Should by default at least support
+	 * 默认情况下至少应该支持
 	 * {@link org.aopalliance.intercept.MethodInterceptor},
 	 * {@link org.springframework.aop.MethodBeforeAdvice},
 	 * {@link org.springframework.aop.AfterReturningAdvice},

@@ -343,8 +343,10 @@ public abstract class ReflectionUtils {
 	/**
 	 * Perform the given callback operation on all matching methods of the given
 	 * class and superclasses (or given interface and super-interfaces).
+	 * 给 给定的类和父类匹配的方法执行给定的回调操作.
 	 * <p>The same named method occurring on subclass and superclass will appear
 	 * twice, unless excluded by the specified {@link MethodFilter}.
+	 * 同时存在于子类和父类的相同方法将出现两次, 除非通过忒定的方法过滤器  排除
 	 * @param clazz the class to introspect
 	 * @param mc the callback to invoke for each method
 	 * @param mf the filter that determines the methods to apply the callback to
@@ -377,6 +379,8 @@ public abstract class ReflectionUtils {
 	/**
 	 * Get all declared methods on the leaf class and all superclasses.
 	 * Leaf class methods are included first.
+	 * 获取在叶子类和所有父类的中声明的方法.
+	 * 叶子类的方法首先包含
 	 * @param leafClass the class to introspect
 	 * @throws IllegalStateException if introspection fails
 	 */

@@ -244,12 +244,16 @@ public abstract class BeanFactoryUtils {
 	/**
 	 * Get all bean names for the given type, including those defined in ancestor
 	 * factories. Will return unique names in case of overridden bean definitions.
+	 * 获取给定类型的所有bean名称, 包括定义在祖先工厂中的.在覆盖bean定义的情况下将返回独一无二的名字
 	 * <p>Does consider objects created by FactoryBeans if the "allowEagerInit"
 	 * flag is set, which means that FactoryBeans will get initialized. If the
 	 * object created by the FactoryBean doesn't match, the raw FactoryBean itself
 	 * will be matched against the type. If "allowEagerInit" is not set,
 	 * only raw FactoryBeans will be checked (which doesn't require initialization
 	 * of each FactoryBean).
+	 * 如果 allowEagerInit 标志被设置, 考虑通过工厂bean创建的对象,这个意味着工厂bean将会得到初始化.
+	 * 如果通过工厂bean创建的对象不匹配, 原始工厂bean本身将与这个类型匹配.
+	 * 如果allowEagerInit没有设置， 只有原始工厂bean将会被检查
 	 * @param lbf the bean factory
 	 * @param includeNonSingletons whether to include prototype or scoped beans too
 	 * or just singletons (also applies to FactoryBeans)
@@ -523,6 +527,7 @@ public abstract class BeanFactoryUtils {
 
 	/**
 	 * Merge the given bean names result with the given parent result.
+	 * 将给定的bean名称结果和给定的父结果合并
 	 * @param result the local bean name result
 	 * @param parentResult the parent bean name result (possibly empty)
 	 * @param hbf the local bean factory

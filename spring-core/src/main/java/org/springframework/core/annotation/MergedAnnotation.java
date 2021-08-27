@@ -453,6 +453,7 @@ public interface MergedAnnotation<A extends Annotation> {
 	/**
 	 * Create a new mutable {@link AnnotationAttributes} instance from this
 	 * merged annotation.
+	 * 从这个合并的注解中创建一个新的可变 AnnotationAttributes
 	 * <p>The {@link Adapt adaptations} may be used to change the way that values
 	 * are added.
 	 * @param adaptations adaptations that should be applied to the annotation values

@@ -32,6 +32,7 @@ import org.springframework.util.MultiValueMap;
  * Defines access to the annotations of a specific type ({@link AnnotationMetadata class}
  * or {@link MethodMetadata method}), in a form that does not necessarily require the
  * class-loading.
+ * 定义对特殊类型AnnotationMeatadata或MeathodMetadata 注解的访问, 在以不需要类加载的形式下
  *
  * @author Juergen Hoeller
  * @author Mark Fisher
@@ -48,6 +49,7 @@ public interface AnnotatedTypeMetadata {
 	/**
 	 * Return annotation details based on the direct annotations of the
 	 * underlying element.
+	 * 基于底层元素的直接注解返回注解详细信息
 	 * @return merged annotations based on the direct annotations
 	 * @since 5.2
 	 */
@@ -87,6 +89,8 @@ public interface AnnotatedTypeMetadata {
 	 * Retrieve the attributes of the annotation of the given type, if any (i.e. if
 	 * defined on the underlying element, as direct annotation or meta-annotation),
 	 * also taking attribute overrides on composed annotations into account.
+	 * 检索给定类型的注解的属性,如果有的话(例如如果定义在底层元素上,作为直接注解或元注解).
+	 * 还考虑了组合注解上的属性覆盖
 	 * @param annotationName the fully qualified class name of the annotation
 	 * type to look for
 	 * @param classValuesAsString whether to convert class references to String

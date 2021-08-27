@@ -21,6 +21,7 @@ package org.springframework.cglib.core;
  * as current thread context ClassLoader for the time of class generation.
  * The ASM ClassWriter in Spring's ASM variant will pick it up when doing
  * common superclass resolution.
+ * CGLIB GeneratorStrategy的变体, 他在类生成时将应用类加载器作为 当前线程上下文类加载器
  *
  * @author Juergen Hoeller
  * @since 5.2

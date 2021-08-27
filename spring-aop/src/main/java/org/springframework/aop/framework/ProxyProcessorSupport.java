@@ -30,6 +30,7 @@ import org.springframework.util.ObjectUtils;
 /**
  * Base class with common functionality for proxy processors, in particular
  * ClassLoader management and the {@link #evaluateProxyInterfaces} algorithm.
+ * 具有代理处理器通用功能的基类,特别是类加载器管理和 evaluateProxyInterfaces算法
  *
  * @author Juergen Hoeller
  * @since 4.1
@@ -96,23 +97,29 @@ public class ProxyProcessorSupport extends ProxyConfig implements Ordered, BeanC
 	/**
 	 * Check the interfaces on the given bean class and apply them to the {@link ProxyFactory},
 	 * if appropriate.
+	 * 如果合适的话, 检查给定的bean类的接口  且 将他们应用到代理工厂
 	 * <p>Calls {@link #isConfigurationCallbackInterface} and {@link #isInternalLanguageInterface}
 	 * to filter for reasonable proxy interfaces, falling back to a target-class proxy otherwise.
+	 * 调用isConfigurationCallbackInterface和isInternalLanguageInterface来过滤合理的代理接口, 否则回退到目标类代理
 	 * @param beanClass the class of the bean
 	 * @param proxyFactory the ProxyFactory for the bean
 	 */
 	protected void evaluateProxyInterfaces(Class<?> beanClass, ProxyFactory proxyFactory) {
+		//获取当前类上的所有接口
 		Class<?>[] targetInterfaces = ClassUtils.getAllInterfacesForClass(beanClass, getProxyClassLoader());
 		boolean hasReasonableProxyInterface = false;
 		for (Class<?> ifc : targetInterfaces) {
+			//如果有合理的接口设置 hasReasonableProxyInterface 为true 并跳出循环
 			if (!isConfigurationCallbackInterface(ifc) && !isInternalLanguageInterface(ifc) &&
 					ifc.getMethods().length > 0) {
 				hasReasonableProxyInterface = true;
 				break;
 			}
 		}
+		//是否拥有合理接口标志 如果为true 则将目标接口都添加到代理工厂中  false的会就设置工厂的proxyTargetClass属性为true  表明代理目标类
 		if (hasReasonableProxyInterface) {
 			// Must allow for introductions; can't just set interfaces to the target's interfaces only.
+			// 必须允许介绍, 不能只设置接口到目标接口上
 			for (Class<?> ifc : targetInterfaces) {
 				proxyFactory.addInterface(ifc);
 			}

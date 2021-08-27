@@ -729,7 +729,9 @@ public abstract class ClassUtils {
 	/**
 	 * Return all interfaces that the given class implements as a Set,
 	 * including ones implemented by superclasses.
+	 * 返回给定类实现的所有接口作为一个集合, 包括由超类实现的.
 	 * <p>If the class itself is an interface, it gets returned as sole interface.
+	 * 如果类本身是一个接口,他作为唯一接口返回
 	 * @param clazz the class to analyze for interfaces
 	 * @return all interfaces that the given object implements as a Set
 	 */
@@ -740,7 +742,9 @@ public abstract class ClassUtils {
 	/**
 	 * Return all interfaces that the given class implements as a Set,
 	 * including ones implemented by superclasses.
+	 * 返回给定类实现的所有接口作为set,包括父类实现的接口.
 	 * <p>If the class itself is an interface, it gets returned as sole interface.
+	 * 如果类的本身是一个接口, 他作为唯一接口返回.
 	 * @param clazz the class to analyze for interfaces
 	 * @param classLoader the ClassLoader that the interfaces need to be visible in
 	 * (may be {@code null} when accepting all declared interfaces)
@@ -888,6 +892,7 @@ public abstract class ClassUtils {
 	/**
 	 * Return the user-defined class for the given class: usually simply the given
 	 * class, but the original class in case of a CGLIB-generated subclass.
+	 * 返回给定类的用户定义的类: 通常只是给定的类,但是在CGLIB生成的子类的情况下是原始类.
 	 * @param clazz the class to check
 	 * @return the user-defined class
 	 */
@@ -1229,14 +1234,19 @@ public abstract class ClassUtils {
 	 * if there is one. E.g. the method may be {@code IFoo.bar()} and the
 	 * target class may be {@code DefaultFoo}. In this case, the method may be
 	 * {@code DefaultFoo.bar()}. This enables attributes on that method to be found.
+	 * 给定一个可能来自接口的方法, 以及当前反射类中使用的目标类, 如果有的话找到对应的目标方法.
+	 * 例如方法可能是 IFoo.bar() 且 目标类可能是 DefaultFoo. 在这种情况下方法可能是 DefaultFoo.bar(). 这可以使得找到该方法的属性
 	 * <p><b>NOTE:</b> In contrast to {@link org.springframework.aop.support.AopUtils#getMostSpecificMethod},
 	 * this method does <i>not</i> resolve Java 5 bridge methods automatically.
+	 * 注意:与AopUtils#getMostSpecificMethod 相反, 这个方法不自动解决 java5的桥接方法.
 	 * Call {@link org.springframework.core.BridgeMethodResolver#findBridgedMethod}
 	 * if bridge method resolution is desirable (e.g. for obtaining metadata from
 	 * the original method definition).
+	 * 如果需要桥接方法解析，调用BridgeMethodResolver#findBridgedMethod
 	 * <p><b>NOTE:</b> Since Spring 3.1.1, if Java security settings disallow reflective
 	 * access (e.g. calls to {@code Class#getDeclaredMethods} etc, this implementation
 	 * will fall back to returning the originally provided method.
+	 * 注意:自从Spring 3.1.1 如果java安全设置不允许反射访问, 这个实现将回退值到返回原始提供的方法
 	 * @param method the method to be invoked, which may come from an interface
 	 * @param targetClass the target class for the current invocation
 	 * (may be {@code null} or may not even implement the method)
@@ -1245,8 +1255,13 @@ public abstract class ClassUtils {
 	 * @see #getInterfaceMethodIfPossible
 	 */
 	public static Method getMostSpecificMethod(Method method, @Nullable Class<?> targetClass) {
+		//1. 目标类不为空
+		//2. 方法的声明类 不等于 目标类
+		//3. 是否满足重写条件
+		//如果以上三个条件都为true的话  在尝试从目标类中获取该方法  不成立的话直接返回当前方法
 		if (targetClass != null && targetClass != method.getDeclaringClass() && isOverridable(method, targetClass)) {
 			try {
+				//该方法是公共的
 				if (Modifier.isPublic(method.getModifiers())) {
 					try {
 						return targetClass.getMethod(method.getName(), method.getParameterTypes());
@@ -1318,16 +1333,20 @@ public abstract class ClassUtils {
 
 	/**
 	 * Determine whether the given method is overridable in the given target class.
+	 * 确定给定的方法是否在给定的目标类中 被重写
 	 * @param method the method to check
 	 * @param targetClass the target class to check against
 	 */
 	private static boolean isOverridable(Method method, @Nullable Class<?> targetClass) {
+		//私有方法直接返回false
 		if (Modifier.isPrivate(method.getModifiers())) {
 			return false;
 		}
+		//公有方法 或 受保护的方法 直接返回true
 		if (Modifier.isPublic(method.getModifiers()) || Modifier.isProtected(method.getModifiers())) {
 			return true;
 		}
+		//如果目标类不存在 或 目标类的包名和声明该方法的包名一致  也直接返回true
 		return (targetClass == null ||
 				getPackageName(method.getDeclaringClass()).equals(getPackageName(targetClass)));
 	}

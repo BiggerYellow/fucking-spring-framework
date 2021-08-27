@@ -65,26 +65,36 @@ import org.springframework.cglib.core.WeakCacheKey;
  * generated subclasses override the non-final methods of the superclass and
  * have hooks which callback to user-defined interceptor
  * implementations.
+ * 生成动态子类来启用方法拦截.此类最初是作为JDK1.3中包含的标准动态代理支持的替代品,但是允许扩展一个具体的基类,除了实现接口之外.
+ * 动态生成的子类覆盖父类的非final方法 且 具有回调到用户定义的拦截器实现的钩子
  * <p>
  * The original and most general callback type is the {@link MethodInterceptor}, which
  * in AOP terms enables "around advice"--that is, you can invoke custom code both before
  * and after the invocation of the "super" method. In addition you can modify the
  * arguments before calling the super method, or not call it at all.
+ * 原始和最通常的回调类型是 MethodInterceptor,在aop术语中他开启环绕通知 也就是说 你可以在调用父类方法之前或折后调用自定义代码.
+ * 除此之外 你可以在调用父类方法之前修改参数, 或根本不调用他
  * <p>
  * Although <code>MethodInterceptor</code> is generic enough to meet any
  * interception need, it is often overkill. For simplicity and performance, additional
  * specialized callback types, such as {@link LazyLoader} are also available.
+ * 尽管MethodInterceptor的通用性足以满足任何拦截需求, 但他往往是矫枉过正的.
+ * 为了简单和性能, 还可以使用其他专门的回调类型,例如 LazyLoader
  * Often a single callback will be used per enhanced class, but you can control
  * which callback is used on a per-method basis with a {@link CallbackFilter}.
+ * 一个简单回调将经常用于每个增强器类, 但是你可以使用CallbackFilter控制在每个方法的基础上使用哪个回调
  * <p>
  * The most common uses of this class are embodied in the static helper methods. For
  * advanced needs, such as customizing the <code>ClassLoader</code> to use, you should create
  * a new instance of <code>Enhancer</code>. Other classes within CGLIB follow a similar pattern.
+ * 这个类通常体现在静态帮助类. 为了进一步的需求, 例如使用自定义的类加载器, 你应该创建一个新的增强器实例. CGLIB中的其他类遵循类似的模式
  * <p>
  * All enhanced objects implement the {@link Factory} interface, unless {@link #setUseFactory} is
  * used to explicitly disable this feature. The <code>Factory</code> interface provides an API
  * to change the callbacks of an existing object, as well as a faster and easier way to create
  * new instances of the same type.
+ * 所有增强的对象实现工厂接口, 除非setUseFactory显示禁止此功能.
+ * 工厂接口提供API来改变存在对象的回调,以及创建相同类型的新实例额更快更简单的方法
  * <p>
  * For an almost drop-in replacement for
  * <code>java.lang.reflect.Proxy</code>, see the {@link Proxy} class.
@@ -242,6 +252,8 @@ public class Enhancer extends AbstractClassGenerator {
 	 * object should be used for each generated object, and should not
 	 * be shared across threads. To create additional instances of a
 	 * generated class, use the <code>Factory</code> interface.
+	 * 创建一个新的Enhancer. 每个新生成的对象应该使用新的Enhancer,且不应该线程共享.
+	 * 为了创建生成类的额外实例, 使用工厂接口
 	 * @see Factory
 	 */
 	public Enhancer() {
@@ -339,6 +351,7 @@ public class Enhancer extends AbstractClassGenerator {
 	 * Set whether methods called from within the proxy's constructer
 	 * will be intercepted. The default value is true. Unintercepted methods
 	 * will call the method of the proxy's base class, if it exists.
+	 * 设置是否拦截从代理构造函数中调用的方法. 默认值为true. 如果存在的话, 非拦截的方法将调用代理的基类的方法
 	 * @param interceptDuringConstruction whether to intercept methods called from the constructor
 	 */
 	public void setInterceptDuringConstruction(boolean interceptDuringConstruction) {

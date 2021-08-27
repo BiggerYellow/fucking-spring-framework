@@ -85,6 +85,7 @@ public abstract class MergedAnnotationSelectors {
 	/**
 	 * {@link MergedAnnotationSelector} to select the first directly declared
 	 * annotation.
+	 * 选择第一个直接声明的注解的 MergedAnnotationSelector
 	 */
 	private static class FirstDirectlyDeclared implements MergedAnnotationSelector<Annotation> {
 

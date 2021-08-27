@@ -50,7 +50,9 @@ public interface Joinpoint {
 
 	/**
 	 * Return the object that holds the current joinpoint's static part.
+	 * 返回当前连接点 静态部分持有的对象
 	 * <p>For instance, the target object for an invocation.
+	 * 例如 调用的目标对象
 	 * @return the object (can be null if the accessible object is static)
 	 */
 	Object getThis();

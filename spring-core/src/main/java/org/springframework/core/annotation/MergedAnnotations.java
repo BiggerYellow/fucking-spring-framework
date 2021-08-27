@@ -29,16 +29,22 @@ import org.springframework.lang.Nullable;
 /**
  * Provides access to a collection of merged annotations, usually obtained
  * from a source such as a {@link Class} or {@link Method}.
+ * 提供对合并注解集合的访问,通常从例如class或Method的来源中获得
  *
  * <p>Each merged annotation represents a view where the attribute values may be
  * "merged" from different source values, typically:
+ * 每个合并的注解代表一个视图 其属性值可以从不同的来源值合并   , 典型的是
  *
  * <ul>
  * <li>Explicit and Implicit {@link AliasFor @AliasFor} declarations on one or
  * more attributes within the annotation</li>
+ * 对注解中的一个或多个属性的显示和隐式 AliasFor声明
  * <li>Explicit {@link AliasFor @AliasFor} declarations for a meta-annotation</li>
+ * 为一个元注解的显示 @AliasFor声明
  * <li>Convention based attribute aliases for a meta-annotation</li>
+ * 元注解的基于约定的属性别名
  * <li>From a meta-annotation declaration</li>
+ * 从元注解声明
  * </ul>
  *
  * <p>For example, a {@code @PostMapping} annotation might be defined as follows:
@@ -60,6 +66,7 @@ import org.springframework.lang.Nullable;
  * merged annotations for both {@code @PostMapping} and the meta-annotation
  * {@code @RequestMapping}. The merged view of the {@code @RequestMapping}
  * annotation will contain the following attributes:
+ * 如果方法被@PostMapping("/home")注释,它将同时拥有@PostMapping和元注解@RequestMapping的合并注解.
  *
  * <p><table border="1">
  * <tr>
@@ -87,19 +94,27 @@ import org.springframework.lang.Nullable;
  * <p>{@link MergedAnnotations} can be obtained {@linkplain #from(AnnotatedElement)
  * from} any Java {@link AnnotatedElement}. They may also be used for sources that
  * don't use reflection (such as those that directly parse bytecode).
+ * MergeAnnotations可以从 #form AnnotatedElement 任何 java AnnotatedElement中获得.
+ * 他们可以用于不使用反射的资源(例如直接解析字节代码的源)
+ *
  *
  * <p>Different {@linkplain SearchStrategy search strategies} can be used to locate
  * related source elements that contain the annotations to be aggregated. For
  * example, {@link SearchStrategy#TYPE_HIERARCHY} will search both superclasses and
  * implemented interfaces.
+ * 可以使用不同的搜索策略定位包含需要聚合的注解的相关源元素.
+ * 举个例子,TYPE_HIERARCHY 将同时搜索子类和父类
  *
  * <p>From a {@link MergedAnnotations} instance you can either
  * {@linkplain #get(String) get} a single annotation, or {@linkplain #stream()
  * stream all annotations} or just those that match {@linkplain #stream(String)
  * a specific type}. You can also quickly tell if an annotation
  * {@linkplain #isPresent(String) is present}.
+ * 你可以同时获取一个简单的注解 或 遍历所有注解 或匹配一个特殊 从一个MergedAnnotations实例中.
+ * 你也可以快速知道一个注解是否存在
  *
  * <p>Here are some typical examples:
+ * 下面是一些典型的例子
  *
  * <pre class="code">
  * // is an annotation present or meta-present?
@@ -231,6 +246,7 @@ public interface MergedAnnotations extends Iterable<MergedAnnotation<Annotation>
 	/**
 	 * Get a matching annotation or meta-annotation of the specified type, or
 	 * {@link MergedAnnotation#missing()} if none is present.
+	 * 获取指定类型匹配的注解或元注解, 或如果没有的话返回missing
 	 * @param annotationType the fully qualified class name of the annotation type
 	 * to get
 	 * @param predicate a predicate that must match, or {@code null} if only
