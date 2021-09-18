@@ -232,6 +232,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	 */
 	@Override
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) {
+		//获取该注册表的哈希值 判断是否已经处理过 若处理过直接抛出异常 未处理则加入已注册集合registriesPostProcessed
 		int registryId = System.identityHashCode(registry);
 		if (this.registriesPostProcessed.contains(registryId)) {
 			throw new IllegalStateException(
@@ -242,7 +243,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 					"postProcessBeanFactory already called on this post-processor against " + registry);
 		}
 		this.registriesPostProcessed.add(registryId);
-		//处理被@Configuration修饰的类
+		//处理注册表中所有被@Configuration修饰的bean定义
 		processConfigBeanDefinitions(registry);
 	}
 
@@ -277,6 +278,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	 * 基于Configuration类的注册表构建和验证配置模型
 	 */
 	public void processConfigBeanDefinitions(BeanDefinitionRegistry registry) {
+		//1.获取注册表中已注册的bean定义,并挑选出配置类候选(使用@Configuration注解的类)并加入到configCandidates中
 		List<BeanDefinitionHolder> configCandidates = new ArrayList<>();
 		String[] candidateNames = registry.getBeanDefinitionNames();
 
@@ -301,6 +303,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 			return;
 		}
 
+		//2. 解析前置操作:根据@Order排序候选者、设置bean名称生成策略、设置Environment、最重要的就是创建ConfigurationClassParser解析器
 		// Sort by previously determined @Order value, if applicable
 		//如果适用的话,根据先前确定的@Order的值排序  order值越小优先级越高
 		configCandidates.sort((bd1, bd2) -> {
@@ -311,6 +314,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 
 		// Detect any custom bean name generation strategy supplied through the enclosing application context
 		//检测 通过封闭应用上下文提供的任何自定义bean名称生成策略
+		//如果注册表中有名称生成器则直接赋值
 		SingletonBeanRegistry sbr = null;
 		if (registry instanceof SingletonBeanRegistry) {
 			sbr = (SingletonBeanRegistry) registry;
@@ -323,19 +327,28 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 				}
 			}
 		}
-
+		//准备Environment
 		if (this.environment == null) {
 			this.environment = new StandardEnvironment();
 		}
 
 		// Parse each @Configuration class
 		//解析每一个@Configuration修饰的类
+		//根据各参数创建配置类解析器
 		ConfigurationClassParser parser = new ConfigurationClassParser(
 				this.metadataReaderFactory, this.problemReporter, this.environment,
 				this.resourceLoader, this.componentScanBeanNameGenerator, registry);
 
+		//对上面的候选者列表去重
 		Set<BeanDefinitionHolder> candidates = new LinkedHashSet<>(configCandidates);
+		//存放已解析的配置类
 		Set<ConfigurationClass> alreadyParsed = new HashSet<>(configCandidates.size());
+
+		//3. 通过ConfigurationClassParser解析候选类 也就是主函数
+		//3.1 首先通过parse方法进行解析主函数,这里就将所有的注解都解析的干干净净 具体逻辑稍后分析
+		//3.1 解析完后进行验证,主要验证解析后配置类及其中的属性是否合法
+		//3.3 此时已经将所有的配置类都解析好了,但是还有通过@Import或@Bean或@ImportedResources或ImportBeanDefinitionRegister的bean未注册,这步就是注册这些类的
+		//3.4 最后就是筛选出所有已经真正解析过的配置类 若存在未解析的加入到candidates中继续进行解析
 		do {
 			//使用ConfigurationClassParser解析每一个配置候选者
 			//即解析主函数 主要作用是 解析每个注解
@@ -347,9 +360,12 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 			//6.default methods on interfaces
 			//7.Process superclass
 			parser.parse(candidates);
+			//校验每个配置类及其中的@Bean方法
 			parser.validate();
 
+			//获取以解析的配置类
 			Set<ConfigurationClass> configClasses = new LinkedHashSet<>(parser.getConfigurationClasses());
+			//因为有可能解析多次 将已经解析过的去除
 			configClasses.removeAll(alreadyParsed);
 
 			// Read the model and create bean definitions based on its content
@@ -360,23 +376,26 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 						this.importBeanNameGenerator, parser.getImportRegistry());
 			}
 			//将解析过的配置类中的一些属性注册为bean定义
+			//主要是 配置类本身是通过@Import导入的、配置类中的@Bean方法、通过@ImportResource导入的类、从ImportBeanDefinitionRegister导入的类
 			this.reader.loadBeanDefinitions(configClasses);
-			//alreadyParsed存放所有实例化过的配置类
+			//将当前解析的configClasses加入已解析集合alreadyParsed
 			alreadyParsed.addAll(configClasses);
 
+			//此时配置类已经解析完毕 清除候选者集合
 			candidates.clear();
-			//如果注册表中的bean定义数量 大于 之前 加载的候选类数量
+			//如果注册表中的bean定义数量 大于 之前 加载的候选类数量 说明解析时注册了很多bean定义
 			if (registry.getBeanDefinitionCount() > candidateNames.length) {
-				//最新的候选配置类数组
+				//去除最新的候选配置类数组
 				String[] newCandidateNames = registry.getBeanDefinitionNames();
-				//旧的候选配置类集合
+				//去重旧的候选配置类集合
 				Set<String> oldCandidateNames = new HashSet<>(Arrays.asList(candidateNames));
+				//存放已解析过的集合
 				Set<String> alreadyParsedClasses = new HashSet<>();
-				//添加到alreadyParsedClasses中
+				//将上面alreadyParsed中已解析过的类添加到alreadyParsedClasses中
 				for (ConfigurationClass configurationClass : alreadyParsed) {
 					alreadyParsedClasses.add(configurationClass.getMetadata().getClassName());
 				}
-				//比较新旧候选类  只有不存在于旧的候选者集合 且 属于配置候选者 才添加到candidates
+				//比较新旧候选类  只有不存在于旧的候选者集合 且 属于配置候选者(被@Configuration注解修饰) 且 alreadyParsedClasses中不包含该配置类 才添加到candidates
 				for (String candidateName : newCandidateNames) {
 					if (!oldCandidateNames.contains(candidateName)) {
 						BeanDefinition bd = registry.getBeanDefinition(candidateName);

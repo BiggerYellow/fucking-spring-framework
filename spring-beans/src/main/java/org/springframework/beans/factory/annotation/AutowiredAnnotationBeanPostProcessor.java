@@ -106,7 +106,7 @@ import org.springframework.util.StringUtils;
  * 自动装配的字段
  * <p>Fields are injected right after construction of a bean, before any
  * config methods are invoked. Such a config field does not have to be public.
- * 在bean被构造之后字段被正确注入,在任何篇日志方法被调用之前. 这样一个配置字段不需要是公共的
+ * 在bean被构造之后字段被正确注入,在任何配置方法被调用之前. 这样一个配置字段不需要是公共的
  *
  * <h3>Autowired Methods</h3>
  * 自动装配方法

@@ -528,15 +528,15 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
-			//为刷新准备上下文
+			//为刷新准备上下文 设置启动信息及初始化一些集合资源
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
-			//通知子类去刷新内部的bean工厂
+			//通知子类去刷新内部的bean工厂 设置刷新状态及序列化id
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
-			//准备在这种情况下使用的bean工厂
+			//准备在此上下文中使用的bean工厂
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -686,11 +686,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		//设置表达式解析器解析 #{...}
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
 		//设置自定义property编辑注册器 解析application.properties中的属性
-		//https://blog.csdn.net/qq_43414291/article/details/111226055
+		//https://blog.csdn.znet/qq_43414291/article/details/111226055
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
 		// Configure the bean factory with context callbacks.
-		// 配置bean工厂通过上下文回调
+		// 使用上下文回调设置bean工厂
 		//添加ApplicationContextAwareProcessor后置处理器  该后置处理器的作用是根据实现的Aware接口给bean中的属性赋值  @link org.springframework.context.support.ApplicationContextAwareProcessor.postProcessBeforeInitialization
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
 		//主要作用是忽略给定接口的自动装配功能
@@ -715,24 +715,31 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 		// Register early post-processor for detecting inner beans as ApplicationListeners.
 		//注册后置处理器 为了检测作为ApplicationListener的内部bean
+		//ApplicationListenerDetector的作用主要是检测所有实现了ApplicationListener接口的单例 并添加到上下文中
 		beanFactory.addBeanPostProcessor(new ApplicationListenerDetector(this));
 
 		// Detect a LoadTimeWeaver and prepare for weaving, if found.
 		//检测 loadTimeWeaver 和准备织入,如果发现的话
 		if (beanFactory.containsBean(LOAD_TIME_WEAVER_BEAN_NAME)) {
+			//注册LoadTimeWeaverAwareProcessor后置处理器
+			//作用是 在bean初始化前 将默认的LoadTimeWeaver传递给实现了LoadTimeWeaverAware接口的bean
 			beanFactory.addBeanPostProcessor(new LoadTimeWeaverAwareProcessor(beanFactory));
 			// Set a temporary ClassLoader for type matching.
+			// 设置临时类加载器进行类型匹配
 			beanFactory.setTempClassLoader(new ContextTypeMatchClassLoader(beanFactory.getBeanClassLoader()));
 		}
 
 		// Register default environment beans.
 		//如果bean工厂中没有的话，注册默认的环境bean
+		//如果上下文中没有environment的bean的话  直接注册到bean工厂中
 		if (!beanFactory.containsLocalBean(ENVIRONMENT_BEAN_NAME)) {
 			beanFactory.registerSingleton(ENVIRONMENT_BEAN_NAME, getEnvironment());
 		}
+		//如果上下文中没有systemProperties的bean的话 直接注册到bean工厂中
 		if (!beanFactory.containsLocalBean(SYSTEM_PROPERTIES_BEAN_NAME)) {
 			beanFactory.registerSingleton(SYSTEM_PROPERTIES_BEAN_NAME, getEnvironment().getSystemProperties());
 		}
+		//如果上下文中没有systemEnvironment的bean的话 直接注册到bean工厂中
 		if (!beanFactory.containsLocalBean(SYSTEM_ENVIRONMENT_BEAN_NAME)) {
 			beanFactory.registerSingleton(SYSTEM_ENVIRONMENT_BEAN_NAME, getEnvironment().getSystemEnvironment());
 		}

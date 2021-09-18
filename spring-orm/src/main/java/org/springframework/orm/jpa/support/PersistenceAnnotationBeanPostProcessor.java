@@ -77,6 +77,8 @@ import org.springframework.util.StringUtils;
  * the corresponding JPA resources {@link javax.persistence.EntityManagerFactory}
  * and {@link javax.persistence.EntityManager}. Any such annotated fields or methods
  * in any Spring-managed object will automatically be injected.
+ * 处理PersistenceUnit和PersistenceContext注解的后置处理器,为了注入相关EntityManagerFactory和EntityManager资源.
+ * 在任何spring管理的对象中 任何这样的注解字段将被自动注入
  *
  * <p>This post-processor will inject sub-interfaces of {@code EntityManagerFactory}
  * and {@code EntityManager} if the annotated fields or methods are declared as such.

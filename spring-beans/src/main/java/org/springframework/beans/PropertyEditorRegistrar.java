@@ -25,6 +25,7 @@ package org.springframework.beans;
  * <p>This is particularly useful when you need to use the same set of
  * property editors in several different situations: write a corresponding
  * registrar and reuse that in each case.
+ * 当你需要在多种不同情况下还有同一组属性编辑器时, 这尤其有用: 编写相应的注册器并在每种情况下重复使用
  *
  * @author Juergen Hoeller
  * @since 1.2.6

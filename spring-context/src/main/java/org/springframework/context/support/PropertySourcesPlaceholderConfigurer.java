@@ -39,18 +39,23 @@ import org.springframework.util.StringValueResolver;
  * Specialization of {@link PlaceholderConfigurerSupport} that resolves ${...} placeholders
  * within bean definition property values and {@code @Value} annotations against the current
  * Spring {@link Environment} and its set of {@link PropertySources}.
+ * PlaceholderConfigurerSupport的专门化, 他解析bean定义属性值 和 @Value注解中的 ${}占位符对当前Spring environment及其PropertySources集合
  *
  * <p>This class is designed as a general replacement for {@code PropertyPlaceholderConfigurer}.
+ * 这个类设计作为PropertyPlaceholderConfigurer的替代品
  * It is used by default to support the {@code property-placeholder} element in working against
  * the spring-context-3.1 or higher XSD; whereas, spring-context versions &lt;= 3.0 default to
  * {@code PropertyPlaceholderConfigurer} to ensure backward compatibility. See the spring-context
  * XSD documentation for complete details.
+ * 默认情况下 它用于支持 property-placeholder元素以支持spring-context-3.1及其更高的版本
  *
  * <p>Any local properties (e.g. those added via {@link #setProperties}, {@link #setLocations}
  * et al.) are added as a {@code PropertySource}. Search precedence of local properties is
  * based on the value of the {@link #setLocalOverride localOverride} property, which is by
  * default {@code false} meaning that local properties are to be searched last, after all
  * environment property sources.
+ * 任何本地属性 (例如通过setProperties、setLocations添加的)作为PropertiesSource添加.
+ * 本地属性的搜索优先级基于localOverride的值, 默认值false, 意味着在所有环境属性源之后搜索本地属性
  *
  * <p>See {@link org.springframework.core.env.ConfigurableEnvironment} and related javadocs
  * for details on manipulating environment property sources.
