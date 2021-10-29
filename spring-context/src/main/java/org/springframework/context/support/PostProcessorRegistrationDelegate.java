@@ -52,7 +52,7 @@ final class PostProcessorRegistrationDelegate {
 	private PostProcessorRegistrationDelegate() {
 	}
 
-	//调用所有后置处理器
+	//调用所有bean工厂后置处理器
 	//此时后置处理器只有三个
 	//1.org.springframework.boot.autoconfigure.SharedMetadataReaderFactoryContextInitializer.CachingMetadataReaderFactoryPostProcessor 在org.springframework.boot.SpringApplication#prepareContext方法中注册的
 	//2.org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer.ConfigurationWarningsPostProcessor 在org.springframework.boot.SpringApplication#prepareContext方法中注册的
@@ -235,7 +235,7 @@ final class PostProcessorRegistrationDelegate {
 	public static void registerBeanPostProcessors(
 			ConfigurableListableBeanFactory beanFactory, AbstractApplicationContext applicationContext) {
 
-		//获取所有的BeanPostProcessor的实现名称
+		//获取所有的BeanPostProcessor的实现类
 		String[] postProcessorNames = beanFactory.getBeanNamesForType(BeanPostProcessor.class, true, false);
 
 		// Register BeanPostProcessorChecker that logs an info message when
@@ -300,7 +300,7 @@ final class PostProcessorRegistrationDelegate {
 		registerBeanPostProcessors(beanFactory, nonOrderedPostProcessors);
 
 		// Finally, re-register all internal BeanPostProcessors.
-		//最后重新注册所有内部的BeanPostProcessor
+		//最后重新注册所有内部的BeanPostProcessor 相当于后置处理器会移动到处理链的末尾
 		sortPostProcessors(internalPostProcessors, beanFactory);
 		registerBeanPostProcessors(beanFactory, internalPostProcessors);
 

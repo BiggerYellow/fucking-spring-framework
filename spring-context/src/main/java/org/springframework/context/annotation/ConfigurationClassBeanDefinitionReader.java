@@ -132,7 +132,8 @@ class ConfigurationClassBeanDefinitionReader {
 	 */
 	private void loadBeanDefinitionsForConfigurationClass(
 			ConfigurationClass configClass, TrackedConditionEvaluator trackedConditionEvaluator) {
-
+		//1.检验是否需要跳过 还是通过 @Conditional注解
+		//若跳过则将当前配置类从注册中心和导入列表中移除
 		if (trackedConditionEvaluator.shouldSkip(configClass)) {
 			String beanName = configClass.getBeanName();
 			if (StringUtils.hasLength(beanName) && this.registry.containsBeanDefinition(beanName)) {
@@ -141,17 +142,18 @@ class ConfigurationClassBeanDefinitionReader {
 			this.importRegistry.removeImportingClass(configClass.getMetadata().getClassName());
 			return;
 		}
-		//该类是否有Import导入或者内置在配置类中自动注册
+		//2.判断该类是否由@Import导入的
+		//是则将自身作为bean定义注册
 		if (configClass.isImported()) {
 			registerBeanDefinitionForImportedConfigurationClass(configClass);
 		}
-		//获取配置类的bean方法 来注册bean定义
+		//3.获取配置类的bean方法 来注册bean定义
 		for (BeanMethod beanMethod : configClass.getBeanMethods()) {
 			loadBeanDefinitionsForBeanMethod(beanMethod);
 		}
-		//从ImportedResources中注册bean定义
+		//4.从ImportedResources中注册bean定义
 		loadBeanDefinitionsFromImportedResources(configClass.getImportedResources());
-		//从ImportBeanDefinitionRegister中注册bean定义
+		//5.从ImportBeanDefinitionRegister中注册bean定义 主要是针对AutoConfigurationPackages.Registrar.class
 		loadBeanDefinitionsFromRegistrars(configClass.getImportBeanDefinitionRegistrars());
 	}
 
@@ -167,13 +169,14 @@ class ConfigurationClassBeanDefinitionReader {
 		ScopeMetadata scopeMetadata = scopeMetadataResolver.resolveScopeMetadata(configBeanDef);
 		configBeanDef.setScope(scopeMetadata.getScopeName());
 		String configBeanName = this.importBeanNameGenerator.generateBeanName(configBeanDef, this.registry);
-		//处理通用注解
+		//处理通用注解 例如@Lazy、@DependsOn等
 		AnnotationConfigUtils.processCommonDefinitionAnnotations(configBeanDef, metadata);
 
 		//创建bean定义持有者 并注册到注册表中
 		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(configBeanDef, configBeanName);
 		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);
 		this.registry.registerBeanDefinition(definitionHolder.getBeanName(), definitionHolder.getBeanDefinition());
+		//注册bean定义
 		configClass.setBeanName(configBeanName);
 
 		if (logger.isTraceEnabled()) {

@@ -377,12 +377,15 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 			}
 			//将解析过的配置类中的一些属性注册为bean定义
 			//主要是 配置类本身是通过@Import导入的、配置类中的@Bean方法、通过@ImportResource导入的类、从ImportBeanDefinitionRegister导入的类
+			//4. 通过reader.loadBeanDefinitions方法注册导入的配置类自身、相关@Bean方法导入的类、@ImportResource导入的类和@Import导入的类的定义
 			this.reader.loadBeanDefinitions(configClasses);
 			//将当前解析的configClasses加入已解析集合alreadyParsed
 			alreadyParsed.addAll(configClasses);
 
 			//此时配置类已经解析完毕 清除候选者集合
 			candidates.clear();
+
+			//5.最后检测后扫描到的配置类中是否有未扫描到的,存在则加入到candidates中继续解析
 			//如果注册表中的bean定义数量 大于 之前 加载的候选类数量 说明解析时注册了很多bean定义
 			if (registry.getBeanDefinitionCount() > candidateNames.length) {
 				//去除最新的候选配置类数组

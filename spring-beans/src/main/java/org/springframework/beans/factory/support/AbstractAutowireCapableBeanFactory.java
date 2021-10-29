@@ -561,7 +561,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			throws BeanCreationException {
 
 		// Instantiate the bean.
-		//实例化bean
+		//实例化bean包裹类
 		BeanWrapper instanceWrapper = null;
 		//如果当前合bean定义是单例的,移除未完成的bean包裹缓存并返回
 		if (mbd.isSingleton()) {
@@ -698,7 +698,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 	/**
 	 * Determine the target type for the given bean definition.
-	 * 确定给定bean定义的结果类型
+	 * 确定给定bean定义的目标类型
 	 * @param beanName the name of the bean (for error handling purposes)
 	 * @param mbd the merged bean definition for the bean
 	 * @param typesToMatch the types to match in case of internal type matching purposes

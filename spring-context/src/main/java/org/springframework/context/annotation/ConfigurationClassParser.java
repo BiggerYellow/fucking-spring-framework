@@ -375,8 +375,9 @@ class ConfigurationClassParser {
 	 * 注册 恰好是配置类本身的成员嵌套类
 	 */
 	private void processMemberClasses(ConfigurationClass configClass, SourceClass sourceClass) throws IOException {
-		//
+		//获取来源类的成员类
 		Collection<SourceClass> memberClasses = sourceClass.getMemberClasses();
+		//筛选出符合条件的成员类 执行processConfigurationClass解析逻辑
 		if (!memberClasses.isEmpty()) {
 			List<SourceClass> candidates = new ArrayList<>(memberClasses.size());
 			for (SourceClass memberClass : memberClasses) {
@@ -600,7 +601,7 @@ class ConfigurationClassParser {
 			this.problemReporter.error(new CircularImportProblem(configClass, this.importStack));
 		}
 		else {
-			//将当前处理的配置类加倍
+			//将当前处理的配置类压栈
 			this.importStack.push(configClass);
 			try {
 				//遍历Import的候选类 通过getImports方法获取的候选类
@@ -831,7 +832,9 @@ class ConfigurationClassParser {
 				if (deferredImports != null) {
 					DeferredImportSelectorGroupingHandler handler = new DeferredImportSelectorGroupingHandler();
 					deferredImports.sort(DEFERRED_IMPORT_COMPARATOR);
+					//1. 通过DeferredImportSelectorGroupingHandler注册AutoConfigurationGroup分组
 					deferredImports.forEach(handler::register);
+					//2. 处理分组的导入配置
 					handler.processGroupImports();
 				}
 			}
@@ -861,12 +864,14 @@ class ConfigurationClassParser {
 		}
 
 		public void processGroupImports() {
+			//groupings中就存放着我们上一步添加的AutoConfigurationGroup
 			for (DeferredImportSelectorGrouping grouping : this.groupings.values()) {
 				//根据getImports()获取所有的配置类  再通过处理Import配置类的方法processImports将每个EnableAutoConfiguration的实现类当做@Configuration解析
 				grouping.getImports().forEach(entry -> {
 					ConfigurationClass configurationClass = this.configurationClasses.get(
 							entry.getMetadata());
 					try {
+						//将自动配置继续执行@Import的处理逻辑 默认都当做普通配置类解析
 						processImports(configurationClass, asSourceClass(configurationClass),
 								asSourceClasses(entry.getImportClassName()), false);
 					}

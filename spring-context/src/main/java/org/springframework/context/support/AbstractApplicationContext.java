@@ -896,7 +896,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	/**
 	 * Add beans that implement ApplicationListener as listeners.
-	 * 添加实现了ApplicationListener的bea作为监听者
+	 * 添加实现了ApplicationListener的bean作为监听者
 	 * Doesn't affect other listeners, which can be added without being beans.
 	 * 不影响其他监听器,可以不加bean
 	 */
