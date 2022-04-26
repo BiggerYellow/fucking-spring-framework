@@ -18,8 +18,6 @@ package org.springframework.core;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import kotlinx.coroutines.CompletableDeferredKt;
-import kotlinx.coroutines.Deferred;
 import org.reactivestreams.Publisher;
 import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
